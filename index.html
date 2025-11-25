@@ -463,7 +463,7 @@
         <div class="input-group" style="margin-bottom: 20px;">
           <label><input type="checkbox" id="chkLastSubmitted"> Data last submitted:</label>
           <input type="date" id="lastSubmittedDate">
-          <lable><input type="checkbox" id="chkHasAccess"> Does not have website access:</lable>
+          <label><input type="checkbox" id="chkHasAccess"> Does not have website access:</label>
         </div>
         <div class="input-grid">
           <div class="input-pair">
@@ -475,16 +475,12 @@
           <div class="input-pair">
             <label for="completed2026">Completed Repairs 2026:</label>
             <input type="number" id="completed2026">
-            <input type="checkbox" id="chkCompleted2026">
-
             <label for="approved2026">Approved Brand – 2026:</label>
             <input type="number" id="approved2026">
           </div>
           <div class="input-pair">
             <label for="completed2025">Completed Repairs 2025:</label>
             <input type="number" id="completed2025">
-            <input type="checkbox" id="chkCompleted2025">       
-
             <label for="approved2025">Approved Brand – 2025:</label>
             <input type="number" id="approved2025">
           </div>
@@ -493,22 +489,19 @@
             <input type="number" id="exclusive2025">
             <label for="completed2024">Completed Repairs 2024:</label>
             <input type="number" id="completed2024">
-            <input type="checkbox" id="chkCompleted2024">  
           </div>
           <div class="input-pair">        
             <label for="completed2023">Completed Repairs 2023:</label>
-            <input type="number" id="completed2023">
-            <input type="checkbox" id="chkCompleted2023">           
+            <input type="number" id="completed2023">        
             <label for="completed2022">Completed Repairs 2022:</label>
             <input type="number" id="completed2022">
-            <input type="checkbox" id="chkCompleted2022">   
           </div>
           <div class="input-pair">
             <label for="writeOffs">Write-offs (total):</label>
             <input type="number" id="writeOffs">
             <label for="writeOffsUnder40k">Write-offs < R40 000:</label>
             <input type="number" id="writeOffsUnder40k">
-          </div>
+            </div>
           <div class="input-pair">
             <label for="pp2026">PP 2026:</label>
             <input type="number" id="pp2026">
@@ -521,13 +514,12 @@
             <label for="2025tsp">2025 TSP:</label>
             <input type="number" id="2025tsp">
           </div>  
-          <div class="input-pair"></div>
+          <div class="input-pair">
             <label for="invalidJobs">Invalid Jobs:</label>
             <input type="number" id="invalidJobs">
-            <lable for="extndDelay">Extended Delays</lable>
+            <label for="extndDelay">Extended Delays</label>
             <input type="number" id="extndDelay">
-          </div>
-        </div>
+            </div>
         <div class="input-full" style="margin-top: 20px;">
           <div class="input-group">
             <label for="openLong">Open >100 Days:</label>
@@ -538,7 +530,6 @@
             <input type="number" id="openLongApproved" placeholder="e.g. 20">
           </div>
         </div>
-      </div>
 
       <!-- Section: Aggregate Flags -->
       <div class="section">
@@ -1280,7 +1271,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   // Submitting full data for all brands
   const chkFullData = document.getElementById('chkFullData').checked;
   if (chkFullData) {
-    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting available to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
+    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting availabel to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
   }
   
   // Website access request
@@ -1450,4 +1441,5 @@ if (showLastSubmitted && lastSubmittedDate) {
   </script>
 
 </body>
+
 </html>
