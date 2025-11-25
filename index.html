@@ -1213,7 +1213,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   const aggregateTextBrands = document.getElementById('aggregateTextBrands').value.trim();
   
   if (chkAggregateText && aggregateTextBrands) {
-    emailParts.push(`Kindly note we see that you are not submitting full data for all repairs on ${aggregateTextBrands} vehicles. Kindly note this may be due to a difference in spelling of the Make on the relevant Job Card and your permissions on $(managementSystemText). For example if your permissions are set to send full data for "${aggregateTextBrands}" but the make on a Job Card is captured as "EOM" you management system will read these as two different Makes and not send full data for said job card. Please ensure that full data is submitted for all repairs on ${aggregateTextBrands} vehicles from date of approval (date). Please find attached copies of your Active Repairs, 2025 Completed Repairs and 2026 Completed Reports where I have highlighted the relevant repairs in yellow.\n`);
+    emailParts.push(`Kindly note we see that you are not submitting full data for all repairs on ${aggregateTextBrands} vehicles. Kindly note this may be due to a difference in spelling of the Make on the relevant Job Card and your permissions on ${managementSystemText}. For example if your permissions are set to send full data for "${aggregateTextBrands}" but the make on a Job Card is captured as "EOM" your management system will read these as two different Makes and not send full data for said job card. Please ensure that full data is submitted for all repairs on ${aggregateTextBrands} vehicles from date of approval (date). Please find attached copies of your Active Repairs, 2025 Completed Repairs and 2026 Completed Reports where I have highlighted the relevant repairs in yellow.\n`);
   }
   
   // Always add this section
@@ -1378,18 +1378,17 @@ if (showLastSubmitted && lastSubmittedDate) {
   const completed2024 = +document.getElementById('completed2024').value || 0;
   const completed2025 = +document.getElementById('completed2025').value || 0;
   
-  const chkCompleted2022 = document.getElementById('chkCompleted2022').checked;
-  const chkCompleted2023 = document.getElementById('chkCompleted2023').checked;
-  const chkCompleted2024 = document.getElementById('chkCompleted2024').checked;
-  const chkCompleted2025 = document.getElementById('chkCompleted2025').checked;
-  const chkCompleted2026 = document.getElementById('chkCompleted2026').checked;
-  
-  const lowYears = [];
-  if (chkCompleted2022) lowYears.push('2022');
-  if (chkCompleted2023) lowYears.push('2023');
-  if (chkCompleted2024) lowYears.push('2024');
-  if (chkCompleted2025) lowYears.push('2025');
-  if (chkCompleted2026) lowYears.push('2026');
+  // Calculate average to determine unusually low years
+const yearTotals = [completed2022, completed2023, completed2024, completed2025, completed2026].filter(n => n > 0);
+const avgCompleted = yearTotals.length > 0 ? yearTotals.reduce((a, b) => a + b, 0) / yearTotals.length : 0;
+const threshold = avgCompleted * 0.5; // 50% below average is considered low
+
+const lowYears = [];
+if (completed2022 > 0 && completed2022 < threshold) lowYears.push('2022');
+if (completed2023 > 0 && completed2023 < threshold) lowYears.push('2023');
+if (completed2024 > 0 && completed2024 < threshold) lowYears.push('2024');
+if (completed2025 > 0 && completed2025 < threshold) lowYears.push('2025');
+if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
   
   if (lowYears.length > 0) {
   const autobodyName = document.getElementById('autobodyName').value.trim() || 'PANEL SHOP NAME';
@@ -1397,6 +1396,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   
   // Find highest year for comparison
   const allYears = [
+    
     {year: 2022, count: completed2022},
     {year: 2023, count: completed2023},
     {year: 2024, count: completed2024},
@@ -1404,7 +1404,7 @@ if (showLastSubmitted && lastSubmittedDate) {
     {year: 2026, count: completed2026}
   ];
   
-  const highestYearData = allYears.reduce((max, current) => current.count > max.count ? current : max);
+  const highestYearData = allYears.reduce((max, current) => current.count > max.count ? current : max, {year: 0, count: 0});
   const highestYear = highestYearData.count;
   const highestYearName = highestYearData.year;
     
@@ -1414,8 +1414,6 @@ if (showLastSubmitted && lastSubmittedDate) {
   // Table section - always add
   const submissionStatus = showLastSubmitted ? 'NOT DAILY' : 'ACTIVE';
   const activeRepairsVal = +document.getElementById('activeRepairs').value || 0;
-  const completed2024Val = +document.getElementById('completed2024').value || 0;
-  const completed2025Val = +document.getElementById('completed2025').value || 0;
   const completed2026Val = +document.getElementById('completed2026').value || 0;
   const writeOffsVal = +document.getElementById('writeOffs').value || 0;
   
@@ -1443,3 +1441,4 @@ if (showLastSubmitted && lastSubmittedDate) {
 </body>
 
 </html>
+
