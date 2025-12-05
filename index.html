@@ -694,6 +694,11 @@
             <textarea id="mitsubishiDisclaimer"></textarea>
           </fieldset>
           <fieldset>
+            <legend>Renault 02/12/2025</legend>
+            <label><input type="checkbox" id="renaultDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
+            <textarea id="renaultDisclaimer"></textarea>
+          </fieldset>
+          <fieldset>
             <legend>Suzuki 09/06/2025</legend>
             <label><input type="checkbox" id="suzukiDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
             <textarea id="suzukiDisclaimer"></textarea>
@@ -1086,7 +1091,7 @@
       const disclaimerBrands = [];
 const disclaimerTexts = [];
 
-['ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'suzuki', 'stellantis'].forEach(idPrefix => {
+['ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'stellantis'].forEach(idPrefix => {
   const txt = document.getElementById(idPrefix + 'Disclaimer')?.value.trim();
   const checkbox = document.getElementById(idPrefix + 'DisclaimerCheck');
   const checked = checkbox ? checkbox.checked : false;
@@ -1339,6 +1344,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   if (selectedOEMs.includes('JAC')) inWarrantyOEMs.push('JAC');
   if (selectedOEMs.includes('Mahindra')) inWarrantyOEMs.push('Mahindra');
   if (selectedOEMs.includes('Mitsubishi')) inWarrantyOEMs.push('Mitsubishi');
+  if (selectedOEMs.includes('Renault')) inWarrantyOEMs.push('Renault');
   if (selectedOEMs.includes('Suzuki')) inWarrantyOEMs.push('Suzuki');
   
   if (inWarrantyOEMs.length > 0) {
@@ -1366,7 +1372,7 @@ if (completed2025 > 0 && completed2025 < threshold) lowYears.push('2025');
 if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
   
   if (lowYears.length > 0) {
-  const autobodyName = document.getElementById('autobodyName').value.trim() || 'PANEL SHOP NAME';
+  const autobodyName = document.getElementById('autobodyName').value.trim() || 'Autobody Name Not Provided';
   const yearsList = lowYears.join(', ').replace(/, ([^,]*)$/, ' & $1');
   
   const allYears = [
@@ -1411,5 +1417,6 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
