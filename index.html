@@ -402,6 +402,14 @@
         <span id="themeIcon">🌙</span>
         <span id="themeText">Dark Mode</span>
       </button>
+      <button class="theme-toggle" onclick="getMotivation()" style="margin-left: 10px;">
+        <span>💪</span>
+        <span>I need Motivation</span>
+      </button>
+    </div>
+    <div id="motivationBox" style="display: none; margin: 20px 40px; padding: 25px; background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,140,0,0.2) 100%); border-left: 5px solid #ffa500; border-radius: 12px; animation: fadeIn 0.5s ease-in;">
+      <p id="motivationText" style="font-size: 1.1em; font-style: italic; margin: 0; color: var(--text-primary);"></p>
+      <button onclick="document.getElementById('motivationBox').style.display='none'" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9em;">Close</button>
     </div>
 
     <!-- Section: Managements -->     
@@ -1412,11 +1420,91 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 
   document.getElementById('reportText').innerHTML = `<pre style="white-space: pre-wrap; font-family: inherit;">${emailParts.join('\n')}</pre>`;
 }
+    function getMotivation() {
+      const quotes = [
+        "Those missing fields don't stand a chance against your determination! ⚡",
+        "Coffee + Validation Reports = Unstoppable You! ☕✨",
+        "Those part descriptions aren't going to validate themselves - but YOU can! 💼",
+        "Crying but trying is still trying. You got this boo! 🫡",
+        "Work smarter, not harder… unless the Wi-Fi is down, then just cry. 😫",
+        "Work-life balance is just balancing coffee in one hand and panic in the other.🐸",
+        "Success is 10% inspiration, 90% pretending you understood the email.📧",
+        "Your spreadsheet doesn’t define you… unless it crashes, then it absolutely does.👻",
+        "Behind every great worker is a browser with 47 tabs👀",
+        "Success is just convincing the office plant to thrive under fluorescent lights🌹",
+        "Your inbox is infinite, but so is your willpower… allegedly.😘",
+        "Success is measured in how many tabs you can keep open without crying.🫣",
+        "Success is just surviving until Friday without throwing your laptop out the window.💻",
+        "Teamwork means everyone panics together, but in sync😛",
+        "Success is measured in how many times you can say ‘per my last email’ without screaming.😶",
+        "Critical but stable, you've got this. Hopefully😬",
+        "Every office plant is silently judging your productivity.🎍",
+        "Every office chair squeak is a cry for help.💺",
+        "Validation errors are just spicy encouragement. 🌶️",
+        "Every missing field is just character development. 📑✨",
+        "Your inbox isn’t infinite — it’s a boss level. 🕹️📨",
+        "Success is convincing Excel to stop gaslighting you. 🧩👀",
+        "Your desk isn’t cluttered — it’s a tactical battlefield. 🗂️⚔️",
+        "Every sticky note is a prophecy. Read wisely. 📜✨",
+        "Every typo is just jazz improvisation. 🎷⌨️",
+        "Every typo is a rebellion against grammar tyranny. ✊⌨️",
+        "Your inbox isn’t full — it’s a hydra. Cut one, two more appear. 🐍📨",
+        "Success is surviving the Fish Tank of Doom, where every fish is a resignation letter in disguise. 🐟💀",
+        "Every unsubmitted repair is just playing hard to get. 💅",
+        "Your management system isn't glitching, it's just having feelings. 🤖💔",
+        "OEMs aren't mad, they're just disappointed... but YOU'RE fixing it! 🛠️✨",
+        "Part purchase prices are just numbers with commitment issues. 💰💍",
+        "Every disclaimer form is a love letter to compliance! 💌",
+        "Missing supplier names? More like surprise suppliers! 🎁",
+        "Year of registration unknown? Mystery vehicle unlocked! 🚙❓",
+        "Your validation isn't failing, it's just... directionally challenged. 🧭",
+        "TMS isn't ignoring you, it's just emotionally unavailable. 💔🖥️",
+        "Every validation email is a opportunity to prove your worth. Or cry. Both valid! 📧😤",
+        "Stellantis categorization forms are just personality tests for cars! 🚙📋",
+        "Chery Tiggo without numbers? That's just a Tiggo in witness protection! 🕵️",
+        "Your approved brands aren't judging you... okay maybe a little! 👀",
+        "Your coworker's lunch is missing from the fridge again. So is your will to live. 🥪👻",
+        "Friday energy on Monday should be illegal. 📅⚖️",
+        "'Think outside the box' they said. The box is the only safe space. 📦🛡️",
+        "'I'll look into it' = I will absolutely forget immediately. 🔍🤷",
+        "The office silence is so loud you can hear your career crying. 🤫😭",
+        "'Thanks for your patience' = sorry for making you wait while I panicked. ⏰😰",
+        "The clock is moving backwards. Time is an illusion. Fridays are a myth. 🕐🌀",
+        "'At your earliest convenience' = NOW but I'm pretending to be polite. ⚡😤",
+        "Your database isn't corrupted, it's just having an existential crisis. 💾🌀",
+        "Your keyboard knows your darkest secrets and most violent thoughts. ⌨️👹",
+        "CC'ing your boss is just public shaming with extra steps. 📧🎪",
+        "Every 'quick question' is a 45-minute hostage situation. ❓⏰",
+        "Your coffee is cold, your dreams are dead, but this spreadsheet is THRIVING. ☕💀📊",
+        "Success is remembering your password without the 'forgot password' walk of shame. 🧠🔑",
+        "'Let's touch base' = I forgot what we talked about, help. 🤝❓",
+        "'Please advise' = I've given up, you deal with it. 🆘🤷",
+        "Your out-of-office reply is the only boundary you have left. 📧🚧",
+        "'Gentle reminder' = This is reminder #47, I'm no longer gentle. 🔔😤",
+        "Every 'we need to talk' message is emotional terrorism. 💬😰",
+        "Success is holding in your feral scream until you reach your car. 🚗😤",
+        "Your inbox is sentient and it hates you specifically. 📨🧿",
+        "'Constructive feedback' = Your soul is about to leave your body. 💬⚰️",
+        "'Rockstar employee' = Overworked, underpaid, heading for burnout. 🎸💀",
+        "Success is when your passive-aggressive email gets the response you wanted. 📧😏",
+        "'End of day' = 11:59pm because time is a social construct. 🕛🌙",
+        "Success is not googling 'how to fake your own death' at work. 🔍💀",
+        "Every 'friendly reminder' is the opposite of friendly. 🔔😠",
+         ];
+  
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
+  document.getElementById('motivationText').textContent = randomQuote;
+  document.getElementById('motivationBox').style.display = 'block';
+  
+  // Scroll to the quote
+  document.getElementById('motivationBox').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
   </script>
 
 </body>
 
 </html>
+
 
 
 
