@@ -1147,9 +1147,9 @@ if (disclaimerBrands.length) {
       const nonStellantis = disclaimerBrands.filter(b => b !== 'Stellantis');
       if (nonStellantis.length > 0) {
         const nonStellantisList = nonStellantis.join(', ').replace(/, ([^,]*)$/, ' & $1');
-        flagText = `There are no recent In-Warranty ${nonStellantisList} repairs where non-OEM parts were fitted and no recent Stellantis Repairs.`;
+        flagText = `There are no recent In-Warranty ${nonStellantisList} repairs where non-OEM parts were fitted and there are no Stellantis vehicles repaired.`;
       } else {
-        flagText = `There are no recent Stellantis Repairs.`;
+        flagText = `There are no Stellantis vehicles repaired.`;
       }
     } else {
       flagText = `There are no recent In-Warranty ${brandList} repairs where non-OEM parts were fitted.`;
@@ -1524,6 +1524,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
