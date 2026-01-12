@@ -441,6 +441,7 @@
         <div class="input-grid">
             <div class="checkbox-group">
                 <label><input type="checkbox" id="chkBaic"> BAIC</label>
+                <label><input type="checkbox" id="chkBYD"> BYD</label>
                 <label><input type="checkbox" id="chkChery"> Chery</label>
                 <label><input type="checkbox" id="chkFord"> Ford</label>
                 <label><input type="checkbox" id="chkGWMhaval"> GWM/Haval</label>
@@ -712,9 +713,19 @@
             <textarea id="suzukiDisclaimer"></textarea>
           </fieldset>
           <fieldset>
+            <legend>Volvo 05/06/2025</legend>
+            <label><input type="checkbox" id="volvoDisclaimerCheck"> No Recent In-Warranty with non-OEM parts</label>
+            <textarea id="volvoDisclaimer"></textarea>
+          </fieldset>          
+          <fieldset>
             <legend>Stellantis Categorization Forms 18/11/2024</legend>
             <label><input type="checkbox" id="stellantisDisclaimerCheck"> No recent categorization forms</label>
             <textarea id="stellantisDisclaimer"></textarea>
+          </fieldset>
+          <fieldset>
+            <legend>Volvo Warranty & Maintenance Verification 02/04/2025</legend>
+            <label><input type="checkbox" id="volvovDisclaimerCheck"> They have not repaired any Volvo Vehicles</label>
+            <textarea id="volvov"></textarea>
           </fieldset>
         </div>
       </div>
@@ -1099,7 +1110,7 @@
       const disclaimerBrands = [];
 const disclaimerTexts = [];
 
-['ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'stellantis'].forEach(idPrefix => {
+['ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'volvo', 'stellantis', 'volvov'].forEach(idPrefix => {
   const txt = document.getElementById(idPrefix + 'Disclaimer')?.value.trim();
   const checkbox = document.getElementById(idPrefix + 'DisclaimerCheck');
   const checked = checkbox ? checkbox.checked : false;
@@ -1108,7 +1119,6 @@ const disclaimerTexts = [];
   if (idPrefix === 'gwmhaval') title = 'GWM & Haval';
   else if (idPrefix === 'stellantis') title = 'Stellantis';
   else title = idPrefix.charAt(0).toUpperCase() + idPrefix.slice(1);
-
   if (checked) {
     disclaimerBrands.push(title);
   }
@@ -1121,24 +1131,32 @@ const disclaimerTexts = [];
     }
   }
 });
-
 if (disclaimerBrands.length) {
   const brandList = disclaimerBrands.join(', ').replace(/, ([^,]*)$/, ' & $1');
   let flagText;
-  if (disclaimerBrands.includes('Stellantis')) {
-    const nonStellantis = disclaimerBrands.filter(b => b !== 'Stellantis');
-    if (nonStellantis.length > 0) {
-      const nonStellantisList = nonStellantis.join(', ').replace(/, ([^,]*)$/, ' & $1');
-      flagText = `There are no recent In-Warranty ${nonStellantisList} repairs where non-OEM parts were fitted and no recent Stellantis categorization forms.`;
+  if (disclaimerBrands.includes('Volvov')) {
+    const nonVolvov = disclaimerBrands.filter(b => b !== 'Volvov');
+    if (nonVolvov.length > 0) {
+      const nonVolvovList = nonVolvov.join(', ').replace(/, ([^,]*)$/, ' & $1');
+      flagText = `There are no recent In-Warranty ${nonVolvovList} repairs where non-OEM parts were fitted and They have not repaired any Volvo Vehicles.`;
     } else {
-      flagText = `There are no recent Stellantis categorization forms.`;
+      flagText = `They have not repaired any Volvo Vehicles.`;
     }
   } else {
-    flagText = `There are no recent In-Warranty ${brandList} repairs where non-OEM parts were fitted.`;
+    if (disclaimerBrands.includes('Stellantis')) {
+      const nonStellantis = disclaimerBrands.filter(b => b !== 'Stellantis');
+      if (nonStellantis.length > 0) {
+        const nonStellantisList = nonStellantis.join(', ').replace(/, ([^,]*)$/, ' & $1');
+        flagText = `There are no recent In-Warranty ${nonStellantisList} repairs where non-OEM parts were fitted and no recent Stellantis Repairs.`;
+      } else {
+        flagText = `There are no recent Stellantis Repairs.`;
+      }
+    } else {
+      flagText = `There are no recent In-Warranty ${brandList} repairs where non-OEM parts were fitted.`;
+    }
   }
   summaryParts.push(flagText);
 }
-
 if (disclaimerTexts.length) {
   summaryParts.push(disclaimerTexts.join(' '));
 }
@@ -1298,6 +1316,7 @@ if (showLastSubmitted && lastSubmittedDate) {
 
   const selectedOEMs = [];
   if (document.getElementById('chkBaic').checked) selectedOEMs.push('BAIC');
+  if (document.getElementById('chkBYD').checked) selectedOEMs.push('BYD');
   if (document.getElementById('chkChery').checked) selectedOEMs.push('Chery');
   if (document.getElementById('chkFord').checked) selectedOEMs.push('Ford');
   if (document.getElementById('chkGWMhaval').checked) selectedOEMs.push('GWM/Haval');
@@ -1354,6 +1373,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   if (selectedOEMs.includes('Mitsubishi')) inWarrantyOEMs.push('Mitsubishi');
   if (selectedOEMs.includes('Renault')) inWarrantyOEMs.push('Renault');
   if (selectedOEMs.includes('Suzuki')) inWarrantyOEMs.push('Suzuki');
+  if (selectedOEMs.includes('Volvo')) inWarrantyOEMs.push('Volvo');
   
   if (inWarrantyOEMs.length > 0) {
     const inWarrantyList = inWarrantyOEMs.join(', ').replace(/, ([^,]*)$/, ' or $1');
@@ -1504,6 +1524,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
