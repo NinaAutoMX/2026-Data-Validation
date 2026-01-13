@@ -230,6 +230,29 @@
       resize: vertical;
     }
 
+    .disclaimer-select {
+      width: 100%;
+      padding: 12px 16px;
+      font-size: 14px;
+      border: 2px solid var(--border-color);
+      border-radius: 8px;
+      background: var(--input-bg);
+      color: var(--text-primary);
+      transition: all 0.3s ease;
+      font-family: inherit;
+      cursor: pointer;
+    }
+
+    .disclaimer-select:hover {
+      border-color: var(--accent);
+    }
+
+    .disclaimer-select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(106, 26, 127, 0.1);
+    }
+
     .checkbox-group {
       display: flex;
       flex-wrap: wrap;
@@ -663,69 +686,130 @@
         <h3 class="section-title">Disclaimer Forms</h3>
         <div class="disclaimer-grid">
           <fieldset>
-            <legend>Ford 08/11/2024</legend>
-            <label><input type="checkbox" id="fordDisclaimerCheck"> No recent In & Out of Warranty with non-OEM parts</label>
-            <textarea id="fordDisclaimer"></textarea>
+            <legend> BAIC </legend>
+            <select id="baicDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
+          </fieldset>
+          <fieldset>
+            <legend> Ford 08/11/2024</legend>
+            <select id="fordDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>GWM & Haval 19/08/2025</legend>
-            <label><input type="checkbox" id="gwmhavalDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="gwmhavalDisclaimer"></textarea>
+            <select id="gwmhavalDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Honda 17/01/2025</legend>
-            <label><input type="checkbox" id="hondaDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="hondaDisclaimer"></textarea>
+            <select id="hondaDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Hyundai 01/04/2025</legend>
-            <label><input type="checkbox" id="hyundaiDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="hyundaiDisclaimer"></textarea>
+            <select id="hyundaiDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Isuzu 21/05/2025</legend>
-            <label><input type="checkbox" id="isuzuDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="isuzuDisclaimer"></textarea>
+            <select id="isuzuDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>JAC 27/06/2025</legend>
-            <label><input type="checkbox" id="jacDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="jacDisclaimer"></textarea>
+            <select id="jacDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Mahindra 22/07/2025</legend>
-            <label><input type="checkbox" id="mahindraDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="mahindraDisclaimer"></textarea>
+            <select id="mahindraDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Mitsubishi 28/03/2025</legend>
-            <label><input type="checkbox" id="mitsubishiDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="mitsubishiDisclaimer"></textarea>
+            <select id="mitsubishiDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Renault 02/12/2025</legend>
-            <label><input type="checkbox" id="renaultDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="renaultDisclaimer"></textarea>
+            <select id="renaultDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Suzuki 09/06/2025</legend>
-            <label><input type="checkbox" id="suzukiDisclaimerCheck"> No recent In-Warranty with non-OEM parts</label>
-            <textarea id="suzukiDisclaimer"></textarea>
+            <select id="suzukiDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Volvo 05/06/2025</legend>
-            <label><input type="checkbox" id="volvoDisclaimerCheck"> No Recent In-Warranty with non-OEM parts</label>
-            <textarea id="volvoDisclaimer"></textarea>
+            <select id="volvoDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>          
           <fieldset>
             <legend>Stellantis Categorization Forms 18/11/2024</legend>
-            <label><input type="checkbox" id="stellantisDisclaimerCheck"> No recent categorization forms</label>
-            <textarea id="stellantisDisclaimer"></textarea>
+            <select id="stellantisDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
           <fieldset>
             <legend>Volvo Warranty & Maintenance Verification 02/04/2025</legend>
-            <label><input type="checkbox" id="volvovDisclaimerCheck"> They have not repaired any Volvo Vehicles</label>
-            <textarea id="volvov"></textarea>
+            <select id="volvovDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
           </fieldset>
         </div>
       </div>
@@ -823,6 +907,12 @@
           }
         }
       });
+
+      document.querySelectorAll('select').forEach(select => {
+        if (select.id) {
+          formData[select.id] = select.value;
+        }
+      });
       
       localStorage.setItem('repairDashboardData', JSON.stringify(formData));
       
@@ -848,6 +938,8 @@
           element.value = formData[key];
         } else if (element && element.type === 'checkbox') {
           element.checked = formData[key];
+        } else if (element && element.tagName === 'SELECT') {
+          element.value = formData[key];
         }
       });
       
@@ -870,9 +962,19 @@
         document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(input => {
           input.value = '';
         });
+
+        document.querySelectorAll('select').forEach(select => {
+          if (select.id) {
+            formData[select.id] = select.value;
+          }
+        });
         
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
           checkbox.checked = false;
+        });
+
+        document.querySelectorAll('select').forEach(select => {
+          select.value = '';
         });
         
         document.getElementById('reportText').innerHTML = '';
@@ -893,7 +995,7 @@
       loadTheme();
       loadFormData();
       
-      document.querySelectorAll('input, textarea').forEach(element => {
+      document.querySelectorAll('input, textarea, select').forEach(element => {
         element.addEventListener('input', autoSave);
         element.addEventListener('change', autoSave);
       });
@@ -1110,56 +1212,51 @@
       const disclaimerBrands = [];
 const disclaimerTexts = [];
 
-['ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'volvo', 'stellantis', 'volvov'].forEach(idPrefix => {
-  const txt = document.getElementById(idPrefix + 'Disclaimer')?.value.trim();
-  const checkbox = document.getElementById(idPrefix + 'DisclaimerCheck');
-  const checked = checkbox ? checkbox.checked : false;
+const disclaimerData = {
+  submitting: [],
+  notSubmitting: [],
+  partial: []
+};
+
+['baic', 'ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'volvo', 'stellantis', 'volvov'].forEach(idPrefix => {
+  const select = document.getElementById(idPrefix + 'Disclaimer');
+  const value = select ? select.value : '';
   
   let title = idPrefix;
   if (idPrefix === 'gwmhaval') title = 'GWM & Haval';
   else if (idPrefix === 'stellantis') title = 'Stellantis';
+  else if (idPrefix === 'volvov') title = 'Volvo Warranty & Maintenance';
   else title = idPrefix.charAt(0).toUpperCase() + idPrefix.slice(1);
-  if (checked) {
-    disclaimerBrands.push(title);
-  }
-  
-  if (txt) {
-    if (idPrefix === 'stellantis') {
-      disclaimerTexts.push(`Stellantis Vehicle Categorization forms: ${txt}`);
-    } else {
-      disclaimerTexts.push(`${title} Disclaimer: ${txt}`);
-    }
+
+  if (value === 'submitting') {
+    disclaimerData.submitting.push(title);
+  } else if (value === 'not-submitting') {
+    disclaimerData.notSubmitting.push(title);
+  } else if (value === 'partial') {
+    disclaimerData.partial.push(title);
   }
 });
-if (disclaimerBrands.length) {
-  const brandList = disclaimerBrands.join(', ').replace(/, ([^,]*)$/, ' & $1');
-  let flagText;
-  if (disclaimerBrands.includes('Volvov')) {
-    const nonVolvov = disclaimerBrands.filter(b => b !== 'Volvov');
-    if (nonVolvov.length > 0) {
-      const nonVolvovList = nonVolvov.join(', ').replace(/, ([^,]*)$/, ' & $1');
-      flagText = `There are no recent In-Warranty ${nonVolvovList} repairs where non-OEM parts were fitted and They have not repaired any Volvo Vehicles.`;
-    } else {
-      flagText = `They have not repaired any Volvo Vehicles.`;
-    }
-  } else {
-    if (disclaimerBrands.includes('Stellantis')) {
-      const nonStellantis = disclaimerBrands.filter(b => b !== 'Stellantis');
-      if (nonStellantis.length > 0) {
-        const nonStellantisList = nonStellantis.join(', ').replace(/, ([^,]*)$/, ' & $1');
-        flagText = `There are no recent In-Warranty ${nonStellantisList} repairs where non-OEM parts were fitted and there are no Stellantis vehicles repaired.`;
-      } else {
-        flagText = `There are no Stellantis vehicles repaired.`;
+
+    const disclaimerSentences = [];
+
+      if (disclaimerData.submitting.length > 0) {
+        const brandList = disclaimerData.submitting.join(', ').replace(/, ([^,]*)$/, ' & $1');
+        disclaimerSentences.push(`They are submitting Disclaimer forms for ${brandList}`);
       }
-    } else {
-      flagText = `There are no recent In-Warranty ${brandList} repairs where non-OEM parts were fitted.`;
-    }
-  }
-  summaryParts.push(flagText);
-}
-if (disclaimerTexts.length) {
-  summaryParts.push(disclaimerTexts.join(' '));
-}
+
+      if (disclaimerData.notSubmitting.length > 0) {
+        const brandList = disclaimerData.notSubmitting.join(', ').replace(/, ([^,]*)$/, ' & $1');
+        disclaimerSentences.push(`They are not submitting any Disclaimer forms for ${brandList}`);
+      }
+
+      if (disclaimerData.partial.length > 0) {
+        const brandList = disclaimerData.partial.join(', ').replace(/, ([^,]*)$/, ' & $1');
+        disclaimerSentences.push(`They are submitting Disclaimer forms for ${brandList}, however there appears to be repairs that do not have Disclaimer forms`);
+      }
+
+      if (disclaimerSentences.length > 0) {
+        summaryParts.push(disclaimerSentences.join(', ') + '.');
+      }
 
       const additionalNotes = document.getElementById('additionalNotes')?.value.trim();
       const creator = document.querySelector('input[name="creator"]:checked')?.value || '';
@@ -1524,6 +1621,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
