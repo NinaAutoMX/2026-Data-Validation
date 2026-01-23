@@ -1498,7 +1498,8 @@ if (aggregateMakeExcluding) {
   if (openLong > 0) {
     emailParts.push("We further wish to bring to your attention that there are a number of repairs which have been active for an unusually long time. Please ensure that job cards are closed as soon as possible after completion and input relevant completion date so that AutoMX Connect can recognise that the repair has been completed. When closed, the job will automatically move from Active to completed, and count as a job for the month in which it is closed. Alternatively if the repairs have been cancelled please cancel the Job Card on your management system so AutoMX Connect knows to remove the repair from your reporting. Please find attached a copy of your Active Repairs and Extended Delayed Repairs Report which shows which repairs have been submitted to AutoMX Connect as active. Kindly note you can view the most up-to-date version of this report by logging into AutoMX Connect and following the instructions in the attached Guide.\n");
   }
-  const completed2022 = +document.getElementById('completed2022').value || 0;
+
+const completed2022 = +document.getElementById('completed2022').value || 0;
 const completed2023 = +document.getElementById('completed2023').value || 0;
 const completed2024 = +document.getElementById('completed2024').value || 0;
 const completed2025 = +document.getElementById('completed2025').value || 0;
@@ -1510,6 +1511,7 @@ const relevantYears = [
   {year: currentYear - 1, count: completed2025, field: completed2025},
   {year: currentYear, count: completed2026, field: completed2026}
 ].filter(y => y.count > 0);
+;
 
 const yearTotals = relevantYears.map(y => y.count);
 const avgCompleted = yearTotals.length > 0 ? yearTotals.reduce((a, b) => a + b, 0) / yearTotals.length : 0;
@@ -1642,6 +1644,7 @@ if (lowYears.length > 0) {
 </body>
 
 </html>
+
 
 
 
