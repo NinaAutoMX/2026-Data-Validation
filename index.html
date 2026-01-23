@@ -853,7 +853,6 @@
   </div>
 
   <script>
-    // Theme toggle
     function toggleTheme() {
       const html = document.documentElement;
       const currentTheme = html.getAttribute('data-theme');
@@ -1564,7 +1563,7 @@ const submissionStatus =
   emailParts.push("Please note that we are aware that certain information cannot be added to jobs retrospectively (such as mileage for vehicles handed back to clients). We only request that you ensure that all future jobs include all such information as to ensure compliance in future.");
 
   document.getElementById('reportText').innerHTML = `<pre style="white-space: pre-wrap; font-family: inherit;">${emailParts.join('\n')}</pre>`;
-}
+
     function getMotivation() {
       const quotes = [
         "Those missing fields don't stand a chance against your determination! ⚡",
@@ -1649,6 +1648,7 @@ const submissionStatus =
 </body>
 
 </html>
+
 
 
 
