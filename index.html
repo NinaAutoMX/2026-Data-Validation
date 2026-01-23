@@ -564,6 +564,8 @@
             <input type="number" id="openLongApproved" placeholder="e.g. 20">
           </div>
         </div>
+      </div>
+    </div>
 
       <!-- Section: Aggregate Flags -->
       <div class="section">
@@ -964,7 +966,7 @@
         localStorage.removeItem('repairDashboardData');
         
         document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(input => {
-          input.value = ' ';
+          input.value = '';
         });
         
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
@@ -972,7 +974,7 @@
         });
 
         document.querySelectorAll('select').forEach(select => {
-          select.value = ' ';
+          select.value = '';
         });
         
         document.getElementById('reportText').innerHTML = '';
@@ -1401,7 +1403,7 @@ if (aggregateMakeExcluding) {
   
   const chkFullData = document.getElementById('chkFullData').checked;
   if (chkFullData) {
-    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting availabel to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
+    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting available to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
   }
   
   if (chkHasAccess) {
@@ -1639,6 +1641,7 @@ if (lowYears.length > 0) {
 </body>
 
 </html>
+
 
 
 
