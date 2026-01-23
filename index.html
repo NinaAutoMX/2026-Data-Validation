@@ -543,10 +543,10 @@
             <input type="number" id="pp2025">
           </div>
           <div class="input-pair">
-            <label for="2026tsp">2026 TSP:</label>
-            <input type="number" id="2026tsp">
-            <label for="2025tsp">2025 TSP:</label>
-            <input type="number" id="2025tsp">
+            <label for="tsp2026">2026 TSP:</label>
+            <input type="number" id="tsp2026">
+            <label for="tsp2025">2025 TSP:</label>
+            <input type="number" id="tsp2025">
           </div>  
           <div class="input-pair">
             <label for="invalidJobs">Invalid Jobs:</label>
@@ -1021,10 +1021,11 @@
       const today = new Date().toLocaleDateString("en-ZA");
       const autobodyName = document.getElementById('autobodyName').value.trim();
       let submissionText = '';
-      const showLastSubmitted = document.getElementById('chkLastSubmitted').checked;
+      const submissionStatus =
+        document.getElementById('chkLastSubmitted')?.checked ? 'NOT DAILY' : 'ACTIVE';
       const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
 
-      if (showLastSubmitted && lastSubmittedDate) {
+      if (document.getElementById('chkLastSubmitted')?.checked && lastSubmittedDate) {
         const formattedDate = new Date(lastSubmittedDate).toLocaleDateString("en-ZA");
         submissionText = ` - Data last submitted ${formattedDate}`;
       }
@@ -1036,8 +1037,8 @@
       const writeOffs = +document.getElementById('writeOffs').value;
       const pp2026 = +document.getElementById('pp2026').value;
       const pp2025 = +document.getElementById('pp2025').value;
-      const tspRawA = +document.getElementById('2026tsp').value || 0;
-      const tspRawB = +document.getElementById('2025tsp').value || 0;
+      const tspRawA = +document.getElementById('tsp2026').value || 0;
+      const tspRawB = +document.getElementById('tsp2025').value || 0;
       const tspAFormatted = 'R ' + tspRawA.toLocaleString("en-ZA", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
@@ -1292,8 +1293,7 @@ function generateEmail() {
   const emailParts = [];
   
   emailParts.push("Good day,\n\nI hope this e-mail finds you well.\n\nKindly note, at present, your validation has failed.\n");
-  
-const showLastSubmitted = document.getElementById('chkLastSubmitted').checked;
+
 const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
 
 const managementSystems = [];
@@ -1325,7 +1325,7 @@ if (hasCheckboxSystem && hasOtherSystem) {
   managementSystemText = 'MANAGEMENT SYSTEM';
 }
 
-if (showLastSubmitted && lastSubmittedDate) {
+if (document.getElementById('chkLastSubmitted')?.checked && lastSubmittedDate) {
   const formattedDate = new Date(lastSubmittedDate).toLocaleDateString("en-ZA");
 
   let submissionMessage = `Kindly note data was last submitted to AutoMX Connect on ${formattedDate}. Kindly note data must be submitted daily. `;
@@ -1453,11 +1453,10 @@ if (aggregateMakeExcluding) {
   if (document.getElementById('chkVolvo').checked) selectedOEMs.push('Volvo');
   if (document.getElementById('chkBmw').checked) selectedOEMs.push('BMW');
   
-  if (selectedOEMs.length > 0 && ppJobDetails) {
   const pp2025 = +document.getElementById('pp2025').value || 0;
   const pp2026 = +document.getElementById('pp2026').value || 0;
-  const tsp2025 = +document.getElementById('2025tsp').value || 0;
-  const tsp2026 = +document.getElementById('2026tsp').value || 0;
+  const tsp2025 = +document.getElementById('tsp2025').value || 0;
+  const tsp2026 = +document.getElementById('tsp2026').value || 0;
   
   const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
   const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
@@ -1506,18 +1505,23 @@ const completed2025 = +document.getElementById('completed2025').value || 0;
 const completed2026 = +document.getElementById('completed2026').value || 0;
 
 const currentYear = new Date().getFullYear();
-const relevantYears = [
-  {year: currentYear - 2, count: completed2024, field: completed2024},
-  {year: currentYear - 1, count: completed2025, field: completed2025},
-  {year: currentYear, count: completed2026, field: completed2026}
-].filter(y => y.count > 0);
-;
-
-const yearTotals = relevantYears.map(y => y.count);
-const avgCompleted = yearTotals.length > 0 ? yearTotals.reduce((a, b) => a + b, 0) / yearTotals.length : 0;
+const yearData = [
+  { year: 2022, count: completed2022 },
+  { year: 2023, count: completed2023 },
+  { year: 2024, count: completed2024 },
+  { year: 2025, count: completed2025 },
+  { year: 2026, count: completed2026 }
+];
+const relevantYears = yearData.filter(y => y.count > 0);
+const avgCompleted =
+  relevantYears.length > 0
+    ? relevantYears.reduce((sum, y) => sum + y.count, 0) / relevantYears.length
+    : 0;
 const threshold = avgCompleted * 0.5;
 
-const lowYears = relevantYears.filter(y => y.count < threshold).map(y => y.year.toString());
+const lowYears = relevantYears
+  .filter(y => y.count < threshold)
+  .map(y => y.year.toString());
 
 if (lowYears.length > 0) {
   const autobodyName = document.getElementById('autobodyName').value.trim() || 'Autobody Name Not Provided';
@@ -1534,11 +1538,12 @@ if (lowYears.length > 0) {
   const highestYearData = allYears.reduce((max, current) => current.count > max.count ? current : max, {year: 0, count: 0});
   const highestYear = highestYearData.count;
   const highestYearName = highestYearData.year;
-    
+
   emailParts.push(`Kindly note further that the number of completed repairs for ${yearsList} appear unusually low given that ${autobodyName} repaired ${highestYear} vehicles in ${highestYearName}. Please check the below totals and let us know if they are an accurate reflection of the total number of vehicles repaired at your panel shop or not. If they are not accurate we suggest you contact ${managementSystemText} for assistance in ensuring that data for all vehicles repaired in ${yearsList} are submitted to AutoMX Connect.\n`);
 }
+const submissionStatus =
+  document.getElementById('chkLastSubmitted')?.checked ? 'NOT DAILY' : 'ACTIVE';
 
-  const submissionStatus = showLastSubmitted ? 'NOT DAILY' : 'ACTIVE';
   const activeRepairsVal = +document.getElementById('activeRepairs').value || 0;
   const completed2026Val = +document.getElementById('completed2026').value || 0;
   const writeOffsVal = +document.getElementById('writeOffs').value || 0;
@@ -1644,6 +1649,7 @@ if (lowYears.length > 0) {
 </body>
 
 </html>
+
 
 
 
