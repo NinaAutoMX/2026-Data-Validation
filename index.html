@@ -1463,7 +1463,7 @@ if (aggregateMakeExcluding) {
   const oemList = selectedOEMs.join(', ').replace(/, ([^,]*)$/, ' and $1');
   
   emailParts.push(`Kindly note further that your data submissions to AutoMX Connect indicate that Parts have only been fitted to ${pp2025} vehicles repaired in 2025 & ${pp2026} vehicles repaired in 2026 and the Total Spent on Parts submitted for Body Shop has been submitted as ${tsp2025Formatted} for 2025 and ${tsp2026Formatted} for 2026. There also appear to be a number of repairs on approved brands where only Part Description, Part Number and Job Card Price are being submitted.\n\nKindly note that the validation report checks if Part Order and Part Purchase Price are captured to let it know parts were fitted to a vehicle and so to check if Part Description, Supplier Name etc. are being submitted.\n\nPlease be sure to submit the following required parts information to AutoMX Connect:\n\n1) Part Description (for each and every part fitted to ${oemList} vehicles)\n2) Supplier Name (for each and every part fitted to ${oemList} vehicles)\n3) Part Purchase Price if purchased from the relevant OEM or one of its dealers (for each and every part fitted to ${oemList} vehicles)\n4) Total spent on Parts (not broken down by model)\n`);
-}
+
   if (selectedOEMs.includes('Stellantis')) {
     emailParts.push("Please also remember to complete and upload the Accident Damage Vehicle Categorization Sheet, Quality Control Documentation and supporting documents for all repairs on Stellantis vehicles and the Disclaimer form for any repairs on in-warranty Stellantis vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted. Kindly note we checked some recently completed repairs on Stellantis vehicles and noticed that the required documents have not been uploaded. Please find attached the relevant bulletin regarding how to complete and upload the required documents via AutoMX (https://www.automx.co.za/automx-main/) as well as the Quality Check Sheet and Disclaimer Form.\n");
   }
@@ -1649,6 +1649,7 @@ const submissionStatus =
 </body>
 
 </html>
+
 
 
 
