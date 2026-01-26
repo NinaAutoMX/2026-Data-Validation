@@ -1030,11 +1030,11 @@
       const pp2025 = +document.getElementById('pp2025').value;
       const tspRawA = +document.getElementById('2026tsp').value || 0;
       const tspRawB = +document.getElementById('2025tsp').value || 0;
-      const tspAFormatted = 'R ' + tspRawA.toLocaleString("de-DE", {
+      const tspAFormatted = 'R ' + tspRawA.toLocaleString("fr-FR", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).replace(/,/g, ' ');
-      const tspBFormatted = 'R ' + tspRawB.toLocaleString("de-DE", {
+      const tspBFormatted = 'R ' + tspRawB.toLocaleString("fr-FR", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).replace(/,/g, ' ');
@@ -1445,8 +1445,8 @@ if (showLastSubmitted && lastSubmittedDate) {
   const tsp2025 = +document.getElementById('2025tsp').value || 0;
   const tsp2026 = +document.getElementById('2026tsp').value || 0;
   
-  const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("de-DE", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
-  const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("de-DE", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
+  const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
+  const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("fr-FR", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
   
   const oemList = selectedOEMs.join(', ').replace(/, ([^,]*)$/, ' and $1');
   
@@ -1625,6 +1625,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
