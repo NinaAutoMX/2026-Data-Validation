@@ -421,23 +421,22 @@
           <input type="text" id="autobodyName" placeholder="Enter autobody name...">
         </div>
       </div>
-      <button class="theme-toggle" id="themeToggleBtn">
+      <button class="theme-toggle" onclick="toggleTheme()">
         <span id="themeIcon">🌙</span>
         <span id="themeText">Dark Mode</span>
       </button>
-      <button class="theme-toggle" id="motivationBtn" style="margin-left: 10px;">
+      <button class="theme-toggle" onclick="getMotivation()" style="margin-left: 10px;">
         <span>💪</span>
         <span>I need Motivation</span>
       </button>
     </div>
     <div id="motivationBox" style="display: none; margin: 20px 40px; padding: 25px; background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,140,0,0.2) 100%); border-left: 5px solid #ffa500; border-radius: 12px; animation: fadeIn 0.5s ease-in;">
       <p id="motivationText" style="font-size: 1.1em; font-style: italic; margin: 0; color: var(--text-primary);"></p>
-      <button id="closeMotivationBtn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9em;">Close</button>
+      <button onclick="document.getElementById('motivationBox').style.display='none'" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9em;">Close</button>
     </div>
 
     <!-- Section: Managements -->     
-     <div class="content">  
-       <div class="section">
+        <div class="section">
             <h3 class="section-title">Management System</h3>
             <div class="input-grid">
                 <div class="checkbox-group">
@@ -475,7 +474,7 @@
                 <label><input type="checkbox" id="chkJAC"> JAC</label>
                 <label><input type="checkbox" id="chkJetour"> Jetour</label>
                 <label><input type="checkbox" id="chkLDV"> LDV</label>
-                <label><input type="checkbox" id="chkMahindra"> Mahindra</label>
+                <label><input type="checkbox" id="chkMahindra"> Mahidnra</label>
                 <label><input type="checkbox" id="chkMG"> MG</label>
                 <label><input type="checkbox" id="chkMitsubishi"> Mitsubishi</label>
                 <label><input type="checkbox" id="chkNissan"> Nissan</label>
@@ -489,7 +488,7 @@
             </div>
         </div>
        </div>
-    
+    <div class="content">
       <!-- Section: Repair Totals -->
       <div class="section">
         <h3 class="section-title">Repair Totals</h3>
@@ -497,7 +496,6 @@
           <label><input type="checkbox" id="chkLastSubmitted"> Data last submitted:</label>
           <input type="date" id="lastSubmittedDate">
           <label><input type="checkbox" id="chkHasAccess"> Does not have website access:</label>
-         <span></span>
         </div>
         <div class="input-grid">
           <div class="input-pair">
@@ -543,10 +541,10 @@
             <input type="number" id="pp2025">
           </div>
           <div class="input-pair">
-            <label for="tsp2026">2026 TSP:</label>
-            <input type="number" id="tsp2026">
-            <label for="tsp2025">2025 TSP:</label>
-            <input type="number" id="tsp2025">
+            <label for="2026tsp">2026 TSP:</label>
+            <input type="number" id="2026tsp">
+            <label for="2025tsp">2025 TSP:</label>
+            <input type="number" id="2025tsp">
           </div>  
           <div class="input-pair">
             <label for="invalidJobs">Invalid Jobs:</label>
@@ -564,8 +562,6 @@
             <input type="number" id="openLongApproved" placeholder="e.g. 20">
           </div>
         </div>
-      </div>
-    </div>
 
       <!-- Section: Aggregate Flags -->
       <div class="section">
@@ -608,7 +604,6 @@
               <label for="validModel">Missing Valid Model:</label>
               <input type="number" id="validModel">
             </div>
-          </div>
             <div class="checkbox-group">
               <label><input type="checkbox" name="validModels" value="Chery Tiggo"> Chery Tiggo</label>
               <label><input type="checkbox" name="validModels" value="Chery Omoda"> Chery Omoda</label>
@@ -667,11 +662,9 @@
             <label for="flaggedParts">Flagged:</label>
             <input type="number" id="flaggedParts">
           </div>
-          <div class="input-pair">
+          <div class="input-group">
             <label for="ppp">Missing Part Purchase Price:</label>
             <input type="number" id="ppp">
-            <label for="appp">Missing Approved PPP:</label>
-            <input type="number" id="appp">
           </div>
           <div class="input-group">
             <label for="ppSpotCheckFlagged">Flagged repairs from PP spot-check:</label>
@@ -695,7 +688,7 @@
           <fieldset>
             <legend> BAIC </legend>
             <select id="baicDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -704,7 +697,7 @@
           <fieldset>
             <legend> Ford 08/11/2024</legend>
             <select id="fordDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -713,7 +706,7 @@
           <fieldset>
             <legend>GWM & Haval 19/08/2025</legend>
             <select id="gwmhavalDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -722,7 +715,7 @@
           <fieldset>
             <legend>Honda 17/01/2025</legend>
             <select id="hondaDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -731,7 +724,7 @@
           <fieldset>
             <legend>Hyundai 01/04/2025</legend>
             <select id="hyundaiDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -740,7 +733,7 @@
           <fieldset>
             <legend>Isuzu 21/05/2025</legend>
             <select id="isuzuDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -749,7 +742,7 @@
           <fieldset>
             <legend>JAC 27/06/2025</legend>
             <select id="jacDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -758,7 +751,7 @@
           <fieldset>
             <legend>Mahindra 22/07/2025</legend>
             <select id="mahindraDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -767,7 +760,7 @@
           <fieldset>
             <legend>Mitsubishi 28/03/2025</legend>
             <select id="mitsubishiDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -776,7 +769,7 @@
           <fieldset>
             <legend>Renault 02/12/2025</legend>
             <select id="renaultDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -785,7 +778,7 @@
           <fieldset>
             <legend>Suzuki 09/06/2025</legend>
             <select id="suzukiDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -794,7 +787,7 @@
           <fieldset>
             <legend>Volvo 05/06/2025</legend>
             <select id="volvoDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -803,7 +796,7 @@
           <fieldset>
             <legend>Stellantis Categorization Forms 18/11/2024</legend>
             <select id="stellantisDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -812,7 +805,7 @@
           <fieldset>
             <legend>Volvo Warranty & Maintenance Verification 02/04/2025</legend>
             <select id="volvovDisclaimer" class="disclaimer-select">
-              <option value="">Select status...</option>
+              <option value=" ">Select status...</option>
               <option value="not-submitting">Not submitting</option>
               <Option value="submitting">Submitting</Option>
               <option value="partial">Partial submission</option>
@@ -831,18 +824,18 @@
           </div>
           <div class="checkbox-group">
             <label>Created By:</label>
-            <label><input type="checkbox" name="creator" value="NH" class="creator-checkbox"> (NH)</label>
-            <label><input type="checkbox" name="creator" value="JW" class="creator-checkbox"> (JW)</label>
+            <label><input type="checkbox" name="creator" value="NH" onclick="toggleExclusive(this)"> (NH)</label>
+            <label><input type="checkbox" name="creator" value="JW" onclick="toggleExclusive(this)"> (JW)</label>
           </div>
         </div>
       </div>
 
       <div class="button-container">
-        <button id="generateReportBtn">Generate Report</button>
-        <button class="new-report-btn" id="newReportBtn">Generate New Report</button>
+        <button onclick="generateReport()">Generate Report</button>
+        <button class="new-report-btn" onclick="newReport()">Generate New Report</button>
       </div>
       <div class="button-container">
-        <button id="generateEmailBtn">Generate Email</button>
+        <button onclick="generateEmail()">Generate Email</button>
       </div>
       <div class="autosave-indicator" id="autosaveIndicator">Auto-save enabled - Your work is saved automatically</div>
 
@@ -853,6 +846,7 @@
   </div>
 
   <script>
+    // Theme toggle
     function toggleTheme() {
       const html = document.documentElement;
       const currentTheme = html.getAttribute('data-theme');
@@ -968,6 +962,12 @@
         document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(input => {
           input.value = '';
         });
+
+        document.querySelectorAll('select').forEach(select => {
+          if (select.id) {
+            formData[select.id] = select.value;
+          }
+        });
         
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
           checkbox.checked = false;
@@ -992,32 +992,14 @@
 
     // Attach auto-save to all form inputs
     document.addEventListener('DOMContentLoaded', () => {
-  loadTheme();
-  loadFormData();
-  
-  // Add button event listeners
-    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
-    document.getElementById('motivationBtn').addEventListener('click', getMotivation);
-    document.getElementById('closeMotivationBtn').addEventListener('click', function() {
-      document.getElementById('motivationBox').style.display = 'none';
-    });
-    document.getElementById('generateReportBtn').addEventListener('click', generateReport);
-    document.getElementById('newReportBtn').addEventListener('click', newReport);
-    document.getElementById('generateEmailBtn').addEventListener('click', generateEmail);
-  
-  // Add creator checkbox event listeners
-    document.querySelectorAll('.creator-checkbox').forEach(checkbox => {
-      checkbox.addEventListener('change', function() {
-        toggleExclusive(this);
+      loadTheme();
+      loadFormData();
+      
+      document.querySelectorAll('input, textarea, select').forEach(element => {
+        element.addEventListener('input', autoSave);
+        element.addEventListener('change', autoSave);
       });
     });
-  
-  // Add auto-save to all form inputs
-    document.querySelectorAll('input, textarea, select').forEach(element => {
-      element.addEventListener('input', autoSave);
-      element.addEventListener('change', autoSave);
-    });
-  });
 
     function toggleExclusive(checkbox) {
       const checkboxes = document.querySelectorAll('input[name="creator"]');
@@ -1038,19 +1020,14 @@
       const today = new Date().toLocaleDateString("en-ZA");
       const autobodyName = document.getElementById('autobodyName').value.trim();
       let submissionText = '';
-      const submissionStatus =
-        document.getElementById('chkLastSubmitted')?.checked ? 'NOT DAILY' : 'ACTIVE';
+      const showLastSubmitted = document.getElementById('chkLastSubmitted').checked;
       const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
 
-      if (document.getElementById('chkLastSubmitted')?.checked && lastSubmittedDate) {
+      if (showLastSubmitted && lastSubmittedDate) {
         const formattedDate = new Date(lastSubmittedDate).toLocaleDateString("en-ZA");
         submissionText = ` - Data last submitted ${formattedDate}`;
       }
-      const approved2026 = +document.getElementById('approved2026').value || 0;
-      const approved2025 = +document.getElementById('approved2025').value || 0;
-      const approvedActive = +document.getElementById('approvedActive').value || 0;
-      const exclusive2025 = +document.getElementById('exclusive2025').value || 0;
-      const activeRepairs = +document.getElementById('activeRepairs').value || 0;
+
       const completed2024 = +document.getElementById('completed2024').value;
       const completed2023 = +document.getElementById('completed2023').value;
       const completed2022 = +document.getElementById('completed2022').value;
@@ -1058,16 +1035,16 @@
       const writeOffs = +document.getElementById('writeOffs').value;
       const pp2026 = +document.getElementById('pp2026').value;
       const pp2025 = +document.getElementById('pp2025').value;
-      const tspRawA = +document.getElementById('tsp2026').value || 0;
-      const tspRawB = +document.getElementById('tsp2025').value || 0;
+      const tspRawA = +document.getElementById('2026tsp').value || 0;
+      const tspRawB = +document.getElementById('2025tsp').value || 0;
       const tspAFormatted = 'R ' + tspRawA.toLocaleString("en-ZA", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-      }).replace(/,/g, ' ').replace(/\./g, ',');
+      }).replace(/,/g, ' ');
       const tspBFormatted = 'R ' + tspRawB.toLocaleString("en-ZA", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
-      }).replace(/,/g, ' ').replace(/\./g, ',');
+      }).replace(/,/g, ' ');
       const extndDelay= +document.getElementById('extndDelay').value;
       const invalidJobs = +document.getElementById('invalidJobs').value;
       const writeOffsUnder40k = +document.getElementById('writeOffsUnder40k').value;
@@ -1102,6 +1079,14 @@
       const flaggedParts = +document.getElementById('flaggedParts').value;
       const ppp = +document.getElementById('ppp').value;
 
+      const approved2026 = +document.getElementById('approved2026').value;
+      const approved2025 = +document.getElementById('approved2025').value;
+      const approvedActive = +document.getElementById('approvedActive').value;
+      const completed2026 = +document.getElementById('completed2026').value;
+      const completed2025 = +document.getElementById('completed2025').value;
+      const exclusive2025 = +document.getElementById('exclusive2025').value;
+      const activeRepairs = +document.getElementById('activeRepairs').value;
+
       const completedTotal = approved2026 + approved2025;
       const repairTotal = approved2026 + approved2025 + approvedActive;
       const allTotal = completed2026 + exclusive2025 + activeRepairs;
@@ -1122,28 +1107,17 @@
         return { jobId, brand, date };
       }).filter(Boolean);
 
-      let pp2025Jobs = [];
-      const rawInput2025 = document.getElementById('pp2025JobsInput')?.value.trim();
-      const lines2025 = rawInput2025.split(',').map(line => line.trim()).filter(Boolean);
-
-      pp2025Jobs = lines2025.map(line => {
-        const match = line.match(/^(\d+)\s*-\s*([\w\s]+)\s*-\s*(\d{2}\/\d{2}\/\d{4})$/);
-        if (!match) return null;
-        const [_, jobId, brand, date] = match;
-        return { jobId, brand, date };
-      }).filter(Boolean);
-
       const autobodyPrefix = autobodyName ? `${autobodyName} - ` : '';
       
       summaryParts.push(
   `${autobodyPrefix}${today}${submissionText} - Active (${activeRepairs}); Completed 2022(${completed2022}), 2023(${completed2023}), 2024(${completed2024}), 2025(${completed2025}), 2026(${completed2026}); ` +
-  `Write-offs(${writeOffs}). Extended Delayed Repairs(${extndDelay}). PP 2025(${pp2025}/${completed2025}) & PP 2026(${pp2026}/${completed2026}); ` +
+  `Write-offs(${writeOffs}). Extended Delayed Repairs(${extndDelay}). PP 2025(${pp2025}) & PP 2026(${pp2026}/${completed2026}); ` +
   `2025 TSP(${tspBFormatted}) & 2026 TSP(${tspAFormatted}). Invalid Jobs(${invalidJobs}).`
 );
 
       if (openLong) {
         const openLongApproved = +document.getElementById('openLongApproved').value;
-        summaryParts.push(`There are ${openLong}/${activeRepairs} repairs that have been open for more than 100 days (${openLongApproved}/${openLong} active repairs have been open for more than 100 days).`);
+        summaryParts.push(`There are ${openLong}/${activeRepairs} repairs that have been open for more than 100 days (${openLongApproved}/${openLong} are for approved brands).`);
       }
 
       if (chkAggregateMake) {
@@ -1218,8 +1192,7 @@
       }
 
       if (ppp) {
-        const appp = +document.getElementById('appp').value || 0;
-        summaryParts.push(`${flagIfLow(ppp, allTotal, "total repairs missing part purchase price")}, ${appp}/${ppp} are for approved brands.`);
+        summaryParts.push(`${flagIfLow(ppp, allTotal, "total repairs missing part purchase price")}.`);
       }
 
       if (ppSpotCheckJobs.length > 0) {
@@ -1231,7 +1204,7 @@
           .map(job => `${job.jobId} - ${job.brand} - ${job.date}`);
 
         summaryParts.push(
-          `I spot-checked ${spotCheckTotal} High Value repairs with R0.00 and found ${flaggedManual} repairs where we are receiving Part Description/Job Card Price and/or Part Number. ` +
+          `I spot-checked ${spotCheckTotal} High Value In-Warranty repairs with R0.00 and found ${flaggedManual} repairs where we are receiving Part Description/Job Card Price and/or Part Number. ` +
           `Jobs affected: ${ppSpotCheckDetails.join(', ')}.`
         );
       }
@@ -1306,9 +1279,10 @@ function generateEmail() {
   const emailParts = [];
   
   emailParts.push("Good day,\n\nI hope this e-mail finds you well.\n\nKindly note, at present, your validation has failed.\n");
-
-  const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
   
+const showLastSubmitted = document.getElementById('chkLastSubmitted').checked;
+const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
+
 const managementSystems = [];
 if (document.getElementById('chkTms').checked) managementSystems.push('TMS');
 if (document.getElementById('chkDrSmash').checked) managementSystems.push('Dr Smash');
@@ -1338,7 +1312,7 @@ if (hasCheckboxSystem && hasOtherSystem) {
   managementSystemText = 'MANAGEMENT SYSTEM';
 }
 
-if (document.getElementById('chkLastSubmitted')?.checked && lastSubmittedDate) {
+if (showLastSubmitted && lastSubmittedDate) {
   const formattedDate = new Date(lastSubmittedDate).toLocaleDateString("en-ZA");
 
   let submissionMessage = `Kindly note data was last submitted to AutoMX Connect on ${formattedDate}. Kindly note data must be submitted daily. `;
@@ -1360,11 +1334,6 @@ if (document.getElementById('chkLastSubmitted')?.checked && lastSubmittedDate) {
   if (chkAggregateText && aggregateTextBrands) {
     emailParts.push(`Kindly note we see that you are not submitting full data for all repairs on ${aggregateTextBrands} vehicles. Kindly note this may be due to a difference in spelling of the Make on the relevant Job Card and your permissions on ${managementSystemText}. For example if your permissions are set to send full data for "${aggregateTextBrands}" but the make on a Job Card is captured as "EOM" your management system will read these as two different Makes and not send full data for said job card. Please ensure that full data is submitted for all repairs on ${aggregateTextBrands} vehicles from date of approval (date). Please find attached copies of your Active Repairs, 2025 Completed Repairs and 2026 Completed Reports where I have highlighted the relevant repairs in yellow.\n`);
   }
-  const aggregateMakeExcluding = document.querySelector('input[name="aggregateMakeOption"][value="Excluding"]').checked;
-
-if (aggregateMakeExcluding) {
-  emailParts.push('Kindly note you do not need to rectify the red "No\'s" under the "Has Make" Column unless the Job Card is a repair on an approved brand.\n');
-}
   
   emailParts.push("Please find attached herewith updated AutoMX Connect validation reports for your company. Please correct all fields indicated in red on your management system (the changes will be sent to us on your next file upload).\n");
   
@@ -1417,7 +1386,7 @@ if (aggregateMakeExcluding) {
   
   const chkFullData = document.getElementById('chkFullData').checked;
   if (chkFullData) {
-    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting available to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
+    emailParts.push("Kindly note that we see that you are submitting full data for a number of OEMs which you either do not hold approval with or which are not administered by AutoMX. Kindly note that when assessing your validation report we only consider the following fields for such brands: Job Start Date, Job Completion Date (if applicable) and Part Purchase Price as this forms part of the aggregate data required to be submitted to AutoMX Connect. That being said we highly recommend that you rectify all the data flagged in the validation report, regardless of brand, as this will make the reporting availabel to you on AutoMX Connect much more accurate and of use to you. We wish to remind you that only you have access to the data regarding brands with which you do not hold approval or which are not administered by AutoMX.\n");
   }
   
   if (chkHasAccess) {
@@ -1445,7 +1414,7 @@ if (aggregateMakeExcluding) {
   const selectedOEMs = [];
   if (document.getElementById('chkBaic').checked) selectedOEMs.push('BAIC');
   if (document.getElementById('chkBYD').checked) selectedOEMs.push('BYD');
-  if (document.getElementById('chkChery').checked) selectedOEMs.push('Chery, Omoda, Jaecoo');
+  if (document.getElementById('chkChery').checked) selectedOEMs.push('Chery');
   if (document.getElementById('chkFord').checked) selectedOEMs.push('Ford');
   if (document.getElementById('chkGWMhaval').checked) selectedOEMs.push('GWM/Haval');
   if (document.getElementById('chkHonda').checked) selectedOEMs.push('Honda');
@@ -1466,10 +1435,11 @@ if (aggregateMakeExcluding) {
   if (document.getElementById('chkVolvo').checked) selectedOEMs.push('Volvo');
   if (document.getElementById('chkBmw').checked) selectedOEMs.push('BMW');
   
+  if (selectedOEMs.length > 0 && ppJobDetails) {
   const pp2025 = +document.getElementById('pp2025').value || 0;
   const pp2026 = +document.getElementById('pp2026').value || 0;
-  const tsp2025 = +document.getElementById('tsp2025').value || 0;
-  const tsp2026 = +document.getElementById('tsp2026').value || 0;
+  const tsp2025 = +document.getElementById('2025tsp').value || 0;
+  const tsp2026 = +document.getElementById('2026tsp').value || 0;
   
   const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
   const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
@@ -1477,13 +1447,13 @@ if (aggregateMakeExcluding) {
   const oemList = selectedOEMs.join(', ').replace(/, ([^,]*)$/, ' and $1');
   
   emailParts.push(`Kindly note further that your data submissions to AutoMX Connect indicate that Parts have only been fitted to ${pp2025} vehicles repaired in 2025 & ${pp2026} vehicles repaired in 2026 and the Total Spent on Parts submitted for Body Shop has been submitted as ${tsp2025Formatted} for 2025 and ${tsp2026Formatted} for 2026. There also appear to be a number of repairs on approved brands where only Part Description, Part Number and Job Card Price are being submitted.\n\nKindly note that the validation report checks if Part Order and Part Purchase Price are captured to let it know parts were fitted to a vehicle and so to check if Part Description, Supplier Name etc. are being submitted.\n\nPlease be sure to submit the following required parts information to AutoMX Connect:\n\n1) Part Description (for each and every part fitted to ${oemList} vehicles)\n2) Supplier Name (for each and every part fitted to ${oemList} vehicles)\n3) Part Purchase Price if purchased from the relevant OEM or one of its dealers (for each and every part fitted to ${oemList} vehicles)\n4) Total spent on Parts (not broken down by model)\n`);
-
+}
   if (selectedOEMs.includes('Stellantis')) {
     emailParts.push("Please also remember to complete and upload the Accident Damage Vehicle Categorization Sheet, Quality Control Documentation and supporting documents for all repairs on Stellantis vehicles and the Disclaimer form for any repairs on in-warranty Stellantis vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted. Kindly note we checked some recently completed repairs on Stellantis vehicles and noticed that the required documents have not been uploaded. Please find attached the relevant bulletin regarding how to complete and upload the required documents via AutoMX (https://www.automx.co.za/automx-main/) as well as the Quality Check Sheet and Disclaimer Form.\n");
   }
   
   if (selectedOEMs.includes('Ford')) {
-    emailParts.push("Please also remember to submit the relevant disclaimer form for any In & Out of warranty Ford vehicles where non-genuine, second hand, alternate salvaged and/or grey safety critical parts are fitted. Please find attached the relevant Ford Bulletins and corresponding Disclaimer.\n");
+    emailParts.push("Please also remember to submit the relevant disclaimer form for any out of warranty Ford vehicles where non-genuine, second hand, alternate salvaged and/or grey safety critical parts are fitted. Please find attached the relevant Ford Bulletins and corresponding Disclaimer.\n");
   }
   
   const inWarrantyOEMs = [];
@@ -1504,43 +1474,34 @@ if (aggregateMakeExcluding) {
   
   if (inWarrantyOEMs.length > 0) {
     const inWarrantyList = inWarrantyOEMs.join(', ').replace(/, ([^,]*)$/, ' or $1');
-    emailParts.push(`Please also remember to submit the relevant disclaimer form for any in warranty ${inWarrantyList} vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted. Please find attached the relevant ${inWarrantyList} Bulletin/s and corresponding Disclaimer form/s.\n`);
+    emailParts.push(`Please also remember to submit the relevant disclaimer form for any in warranty ${inWarrantyList} vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted as we have noticed that this has not been uploaded for all said repairs as required. Please find attached the relevant ${inWarrantyList} Bulletin/s and corresponding Disclaimer form/s.\n`);
   }
   const openLong = +document.getElementById('openLong').value || 0;
   if (openLong > 0) {
     emailParts.push("We further wish to bring to your attention that there are a number of repairs which have been active for an unusually long time. Please ensure that job cards are closed as soon as possible after completion and input relevant completion date so that AutoMX Connect can recognise that the repair has been completed. When closed, the job will automatically move from Active to completed, and count as a job for the month in which it is closed. Alternatively if the repairs have been cancelled please cancel the Job Card on your management system so AutoMX Connect knows to remove the repair from your reporting. Please find attached a copy of your Active Repairs and Extended Delayed Repairs Report which shows which repairs have been submitted to AutoMX Connect as active. Kindly note you can view the most up-to-date version of this report by logging into AutoMX Connect and following the instructions in the attached Guide.\n");
   }
-
-const completed2022 = +document.getElementById('completed2022').value || 0;
-const completed2023 = +document.getElementById('completed2023').value || 0;
-const completed2024 = +document.getElementById('completed2024').value || 0;
-const completed2025 = +document.getElementById('completed2025').value || 0;
-const completed2026 = +document.getElementById('completed2026').value || 0;
-
-const currentYear = new Date().getFullYear();
-const yearData = [
-  { year: 2022, count: completed2022 },
-  { year: 2023, count: completed2023 },
-  { year: 2024, count: completed2024 },
-  { year: 2025, count: completed2025 },
-  { year: 2026, count: completed2026 }
-];
-const relevantYears = yearData.filter(y => y.count > 0);
-const avgCompleted =
-  relevantYears.length > 0
-    ? relevantYears.reduce((sum, y) => sum + y.count, 0) / relevantYears.length
-    : 0;
+  const completed2022 = +document.getElementById('completed2022').value || 0;
+  const completed2023 = +document.getElementById('completed2023').value || 0;
+  const completed2024 = +document.getElementById('completed2024').value || 0;
+  const completed2025 = +document.getElementById('completed2025').value || 0;
+ 
+const yearTotals = [completed2022, completed2023, completed2024, completed2025, completed2026].filter(n => n > 0);
+const avgCompleted = yearTotals.length > 0 ? yearTotals.reduce((a, b) => a + b, 0) / yearTotals.length : 0;
 const threshold = avgCompleted * 0.5;
-
-const lowYears = relevantYears
-  .filter(y => y.count < threshold)
-  .map(y => y.year.toString());
-
-if (lowYears.length > 0) {
+  
+const lowYears = [];
+if (completed2022 > 0 && completed2022 < threshold) lowYears.push('2022');
+if (completed2023 > 0 && completed2023 < threshold) lowYears.push('2023');
+if (completed2024 > 0 && completed2024 < threshold) lowYears.push('2024');
+if (completed2025 > 0 && completed2025 < threshold) lowYears.push('2025');
+if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
+  
+  if (lowYears.length > 0) {
   const autobodyName = document.getElementById('autobodyName').value.trim() || 'Autobody Name Not Provided';
   const yearsList = lowYears.join(', ').replace(/, ([^,]*)$/, ' & $1');
   
   const allYears = [
+    
     {year: 2022, count: completed2022},
     {year: 2023, count: completed2023},
     {year: 2024, count: completed2024},
@@ -1551,12 +1512,10 @@ if (lowYears.length > 0) {
   const highestYearData = allYears.reduce((max, current) => current.count > max.count ? current : max, {year: 0, count: 0});
   const highestYear = highestYearData.count;
   const highestYearName = highestYearData.year;
-
-  emailParts.push(`Kindly note further that the number of completed repairs for ${yearsList} appear unusually low given that ${autobodyName} repaired ${highestYear} vehicles in ${highestYearName}. Please check the below totals and let us know if they are an accurate reflection of the total number of vehicles repaired at your panel shop or not. If they are not accurate we suggest you contact ${managementSystemText} for assistance in ensuring that data for all vehicles repaired in ${yearsList} are submitted to AutoMX Connect.\n`);
+    
+    emailParts.push(`Kindly note further that the number of completed repairs for ${yearsList} appear unusually low given that ${autobodyName} repaired ${highestYear} vehicles in ${highestYearName}. Please check the below totals and let us know if they are an accurate reflection of the total number of vehicles repaired at your panel shop or not. If they are not accurate we suggest you contact ${managementSystemText} for assistance in ensuring that data for all vehicles repaired in ${yearsList} are submitted to AutoMX Connect.\n`);
 }
-const submissionStatus =
-  document.getElementById('chkLastSubmitted')?.checked ? 'NOT DAILY' : 'ACTIVE';
-
+  const submissionStatus = showLastSubmitted ? 'NOT DAILY' : 'ACTIVE';
   const activeRepairsVal = +document.getElementById('activeRepairs').value || 0;
   const completed2026Val = +document.getElementById('completed2026').value || 0;
   const writeOffsVal = +document.getElementById('writeOffs').value || 0;
@@ -1577,8 +1536,7 @@ const submissionStatus =
   emailParts.push("Please note that we are aware that certain information cannot be added to jobs retrospectively (such as mileage for vehicles handed back to clients). We only request that you ensure that all future jobs include all such information as to ensure compliance in future.");
 
   document.getElementById('reportText').innerHTML = `<pre style="white-space: pre-wrap; font-family: inherit;">${emailParts.join('\n')}</pre>`;
-    }
-
+}
     function getMotivation() {
       const quotes = [
         "Those missing fields don't stand a chance against your determination! ⚡",
@@ -1663,18 +1621,6 @@ const submissionStatus =
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
