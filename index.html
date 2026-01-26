@@ -1046,7 +1046,11 @@
         const formattedDate = new Date(lastSubmittedDate).toLocaleDateString("en-ZA");
         submissionText = ` - Data last submitted ${formattedDate}`;
       }
-
+      const approved2026 = +document.getElementById('approved2026').value || 0;
+      const approved2025 = +document.getElementById('approved2025').value || 0;
+      const approvedActive = +document.getElementById('approvedActive').value || 0;
+      const exclusive2025 = +document.getElementById('exclusive2025').value || 0;
+      const activeRepairs = +document.getElementById('activeRepairs').value || 0;
       const completed2024 = +document.getElementById('completed2024').value;
       const completed2023 = +document.getElementById('completed2023').value;
       const completed2022 = +document.getElementById('completed2022').value;
@@ -1303,8 +1307,8 @@ function generateEmail() {
   
   emailParts.push("Good day,\n\nI hope this e-mail finds you well.\n\nKindly note, at present, your validation has failed.\n");
 
-const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
-
+  const lastSubmittedDate = document.getElementById('lastSubmittedDate').value;
+  
 const managementSystems = [];
 if (document.getElementById('chkTms').checked) managementSystems.push('TMS');
 if (document.getElementById('chkDrSmash').checked) managementSystems.push('Dr Smash');
@@ -1659,6 +1663,7 @@ const submissionStatus =
 </body>
 
 </html>
+
 
 
 
