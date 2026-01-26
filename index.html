@@ -667,7 +667,7 @@
             <label for="flaggedParts">Flagged:</label>
             <input type="number" id="flaggedParts">
           </div>
-          <div class="input-group">
+          <div class="input-pair">
             <label for="ppp">Missing Part Purchase Price:</label>
             <input type="number" id="ppp">
             <label for="appp">Missing Approved PPP:</label>
@@ -1563,6 +1563,7 @@ const submissionStatus =
   emailParts.push("Please note that we are aware that certain information cannot be added to jobs retrospectively (such as mileage for vehicles handed back to clients). We only request that you ensure that all future jobs include all such information as to ensure compliance in future.");
 
   document.getElementById('reportText').innerHTML = `<pre style="white-space: pre-wrap; font-family: inherit;">${emailParts.join('\n')}</pre>`;
+    }
 
     function getMotivation() {
       const quotes = [
@@ -1648,6 +1649,7 @@ const submissionStatus =
 </body>
 
 </html>
+
 
 
 
