@@ -569,8 +569,9 @@
         <div class="input-grid">
           <div class="checkbox-group">
             <label><input type="checkbox" id="chkAggregateMake"> Submitting aggregate data</label>
-            <label><input type="checkbox" name="aggregateMakeOption" value="Including"> Including</label>
-            <label><input type="checkbox" name="aggregateMakeOption" value="Excluding"> Excluding</label>
+            
+            <label><input type="radio" name="aggregateMakeOption" value="Including"> Including</label>
+            <label><input type="radio" name="aggregateMakeOption" value="Excluding"> Excluding</label>
             <label><input type="checkbox" id="chkFullData"> Submitting full data for all brands</label>
             <label><input type="checkbox" id="chkFullBrandData"> Submitting full data for approved brands</label>
             <label><input type="checkbox" id="chkAggregateText"> Receiving aggregate data for some repairs</label>
@@ -662,9 +663,11 @@
             <label for="flaggedParts">Flagged:</label>
             <input type="number" id="flaggedParts">
           </div>
-          <div class="input-group">
+          <div class="input-pair">
             <label for="ppp">Missing Part Purchase Price:</label>
             <input type="number" id="ppp">
+            <label for="appp">Missing PPP for Approved:</label>
+            <input type="number" id="appp">
           </div>
           <div class="input-group">
             <label for="ppSpotCheckFlagged">Flagged repairs from PP spot-check:</label>
@@ -673,10 +676,6 @@
           <div class="input-group">
             <label for="pp2026JobsInput">PP 2026 Job Details:</label>
             <textarea id="pp2026JobsInput" placeholder="e.g. PP123 - Brake pad - 01/01/2026"></textarea>
-          </div>
-          <div class="input-group">
-            <label for="pp2025JobsInput">PP 2025 Job Details:</label>
-            <textarea id="pp2025JobsInput" placeholder="e.g. PP123 - Brake pad - 01/01/2025"></textarea>
           </div>
         </div>
       </div>
@@ -959,7 +958,7 @@
       if (confirm('Are you sure you want to start a new report? This will clear all current data.')) {
         localStorage.removeItem('repairDashboardData');
         
-        document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(input => {
+        document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="checkbox"], textarea, select').forEach(input => {
           input.value = '';
         });
 
@@ -1037,11 +1036,11 @@
       const pp2025 = +document.getElementById('pp2025').value;
       const tspRawA = +document.getElementById('2026tsp').value || 0;
       const tspRawB = +document.getElementById('2025tsp').value || 0;
-      const tspAFormatted = 'R ' + tspRawA.toLocaleString("en-ZA", {
+      const tspAFormatted = 'R ' + tspRawA.toLocaleString("de-DE", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).replace(/,/g, ' ');
-      const tspBFormatted = 'R ' + tspRawB.toLocaleString("en-ZA", {
+      const tspBFormatted = 'R ' + tspRawB.toLocaleString("de-DE", {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2
       }).replace(/,/g, ' ');
@@ -1054,8 +1053,8 @@
       const chkFullData = document.getElementById('chkFullData').checked;
       const chkAggregateText = document.getElementById('chkAggregateText').checked;
       const aggregateTextBrands = document.getElementById('aggregateTextBrands').value.trim();
-      const aggregateMakeOptions = Array.from(document.querySelectorAll('input[name="aggregateMakeOption"]:checked')).map(cb => cb.value);
-      const makeClause = aggregateMakeOptions.length ? ` (${aggregateMakeOptions.join(' & ')})` : '';
+      const selectedOption = document.querySelector('input[name="aggregateMakeOption"]:checked')?.value || '';
+      const makeClause = selectedOption ? ` (${selectedOption})` : '';
       const chkInsurerName = document.getElementById('chkInsurerName').checked;
 
       const missstart = +document.getElementById('missstart').value;
@@ -1078,6 +1077,7 @@
       const spotSample = +document.getElementById('spotSample').value;
       const flaggedParts = +document.getElementById('flaggedParts').value;
       const ppp = +document.getElementById('ppp').value;
+      const appp = +document.getElementById('appp').value;
 
       const approved2026 = +document.getElementById('approved2026').value;
       const approved2025 = +document.getElementById('approved2025').value;
@@ -1111,13 +1111,13 @@
       
       summaryParts.push(
   `${autobodyPrefix}${today}${submissionText} - Active (${activeRepairs}); Completed 2022(${completed2022}), 2023(${completed2023}), 2024(${completed2024}), 2025(${completed2025}), 2026(${completed2026}); ` +
-  `Write-offs(${writeOffs}). Extended Delayed Repairs(${extndDelay}). PP 2025(${pp2025}) & PP 2026(${pp2026}/${completed2026}); ` +
+  `Write-offs(${writeOffs}). Extended Delayed Repairs(${extndDelay}). PP 2025(${pp2025}/${completed2025}) & PP 2026(${pp2026}/${completed2026}); ` +
   `2025 TSP(${tspBFormatted}) & 2026 TSP(${tspAFormatted}). Invalid Jobs(${invalidJobs}).`
 );
 
       if (openLong) {
         const openLongApproved = +document.getElementById('openLongApproved').value;
-        summaryParts.push(`There are ${openLong}/${activeRepairs} repairs that have been open for more than 100 days (${openLongApproved}/${openLong} are for approved brands).`);
+        summaryParts.push(`There are ${openLong}/${activeRepairs} Active repairs that have been open for more than 100 days (${openLongApproved}/${openLong} are for approved brands).`);
       }
 
       if (chkAggregateMake) {
@@ -1192,7 +1192,7 @@
       }
 
       if (ppp) {
-        summaryParts.push(`${flagIfLow(ppp, allTotal, "total repairs missing part purchase price")}.`);
+        summaryParts.push(`${flagIfLow(ppp, allTotal, "total repairs missing part purchase price")} (${appp}/${repairTotal} are for approved brands).`);
       }
 
       if (ppSpotCheckJobs.length > 0) {
@@ -1204,7 +1204,7 @@
           .map(job => `${job.jobId} - ${job.brand} - ${job.date}`);
 
         summaryParts.push(
-          `I spot-checked ${spotCheckTotal} High Value In-Warranty repairs with R0.00 and found ${flaggedManual} repairs where we are receiving Part Description/Job Card Price and/or Part Number. ` +
+          `I spot-checked ${spotCheckTotal} High Value repairs with R0.00 and found ${flaggedManual} repairs where we are receiving Part Description/Job Card Price and/or Part Number. ` +
           `Jobs affected: ${ppSpotCheckDetails.join(', ')}.`
         );
       }
@@ -1335,6 +1335,16 @@ if (showLastSubmitted && lastSubmittedDate) {
     emailParts.push(`Kindly note we see that you are not submitting full data for all repairs on ${aggregateTextBrands} vehicles. Kindly note this may be due to a difference in spelling of the Make on the relevant Job Card and your permissions on ${managementSystemText}. For example if your permissions are set to send full data for "${aggregateTextBrands}" but the make on a Job Card is captured as "EOM" your management system will read these as two different Makes and not send full data for said job card. Please ensure that full data is submitted for all repairs on ${aggregateTextBrands} vehicles from date of approval (date). Please find attached copies of your Active Repairs, 2025 Completed Repairs and 2026 Completed Reports where I have highlighted the relevant repairs in yellow.\n`);
   }
   
+  const chkAggregateMake = document.getElementById('chkAggregateMake').checked;
+  const aggregateMakeOption = document.querySelector('input[name="aggregateMakeOption"]:checked')?.value;
+
+  if (chkAggregateMake && aggregateMakeOption === "Excluding") {
+      emailParts.push(
+      'Kindly note you do not need to rectify the red “No’s” under the “Has Make” Column unless the Job Card is a repair on an approved brand.\n'
+      );
+    }
+
+  
   emailParts.push("Please find attached herewith updated AutoMX Connect validation reports for your company. Please correct all fields indicated in red on your management system (the changes will be sent to us on your next file upload).\n");
   
   const chkHasAccess = document.getElementById('chkHasAccess').checked;
@@ -1414,7 +1424,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   const selectedOEMs = [];
   if (document.getElementById('chkBaic').checked) selectedOEMs.push('BAIC');
   if (document.getElementById('chkBYD').checked) selectedOEMs.push('BYD');
-  if (document.getElementById('chkChery').checked) selectedOEMs.push('Chery');
+  if (document.getElementById('chkChery').checked) selectedOEMs.push('Chery, Omoda & Jaecoo');
   if (document.getElementById('chkFord').checked) selectedOEMs.push('Ford');
   if (document.getElementById('chkGWMhaval').checked) selectedOEMs.push('GWM/Haval');
   if (document.getElementById('chkHonda').checked) selectedOEMs.push('Honda');
@@ -1441,8 +1451,8 @@ if (showLastSubmitted && lastSubmittedDate) {
   const tsp2025 = +document.getElementById('2025tsp').value || 0;
   const tsp2026 = +document.getElementById('2026tsp').value || 0;
   
-  const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
-  const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("en-ZA", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
+  const tsp2025Formatted = 'R ' + tsp2025.toLocaleString("de-DE", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
+  const tsp2026Formatted = 'R ' + tsp2026.toLocaleString("de-DE", {minimumFractionDigits: 2, maximumFractionDigits: 2}).replace(/,/g, ' ');
   
   const oemList = selectedOEMs.join(', ').replace(/, ([^,]*)$/, ' and $1');
   
@@ -1453,7 +1463,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   }
   
   if (selectedOEMs.includes('Ford')) {
-    emailParts.push("Please also remember to submit the relevant disclaimer form for any out of warranty Ford vehicles where non-genuine, second hand, alternate salvaged and/or grey safety critical parts are fitted. Please find attached the relevant Ford Bulletins and corresponding Disclaimer.\n");
+    emailParts.push("Please also remember to submit the relevant disclaimer form for any In & Out of warranty Ford vehicles where non-genuine, second hand, alternate salvaged and/or grey safety critical parts are fitted. Please find attached the relevant Ford Bulletins and corresponding Disclaimer.\n");
   }
   
   const inWarrantyOEMs = [];
@@ -1474,7 +1484,7 @@ if (showLastSubmitted && lastSubmittedDate) {
   
   if (inWarrantyOEMs.length > 0) {
     const inWarrantyList = inWarrantyOEMs.join(', ').replace(/, ([^,]*)$/, ' or $1');
-    emailParts.push(`Please also remember to submit the relevant disclaimer form for any in warranty ${inWarrantyList} vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted as we have noticed that this has not been uploaded for all said repairs as required. Please find attached the relevant ${inWarrantyList} Bulletin/s and corresponding Disclaimer form/s.\n`);
+    emailParts.push(`Please also remember to submit the relevant disclaimer form for any in warranty ${inWarrantyList} vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted. Please find attached the relevant ${inWarrantyList} Bulletin/s and corresponding Disclaimer form/s.\n`);
   }
   const openLong = +document.getElementById('openLong').value || 0;
   if (openLong > 0) {
@@ -1621,6 +1631,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
