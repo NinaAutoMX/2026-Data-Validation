@@ -421,18 +421,18 @@
           <input type="text" id="autobodyName" placeholder="Enter autobody name...">
         </div>
       </div>
-      <button class="theme-toggle" onclick="toggleTheme()">
+      <button class="theme-toggle" id="themeToggleBtn">
         <span id="themeIcon">🌙</span>
         <span id="themeText">Dark Mode</span>
       </button>
-      <button class="theme-toggle" onclick="getMotivation()" style="margin-left: 10px;">
+      <button class="theme-toggle" id="motivationBtn" style="margin-left: 10px;">
         <span>💪</span>
         <span>I need Motivation</span>
       </button>
     </div>
     <div id="motivationBox" style="display: none; margin: 20px 40px; padding: 25px; background: linear-gradient(135deg, rgba(255,215,0,0.2) 0%, rgba(255,140,0,0.2) 100%); border-left: 5px solid #ffa500; border-radius: 12px; animation: fadeIn 0.5s ease-in;">
       <p id="motivationText" style="font-size: 1.1em; font-style: italic; margin: 0; color: var(--text-primary);"></p>
-      <button onclick="document.getElementById('motivationBox').style.display='none'" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9em;">Close</button>
+      <button id="closeMotivationBtn" style="margin-top: 15px; padding: 8px 20px; font-size: 0.9em;">Close</button>
     </div>
 
     <!-- Section: Managements -->     
@@ -831,18 +831,18 @@
           </div>
           <div class="checkbox-group">
             <label>Created By:</label>
-            <label><input type="checkbox" name="creator" value="NH" onclick="toggleExclusive(this)"> (NH)</label>
-            <label><input type="checkbox" name="creator" value="JW" onclick="toggleExclusive(this)"> (JW)</label>
+            <label><input type="checkbox" name="creator" value="NH" class="creator-checkbox"> (NH)</label>
+            <label><input type="checkbox" name="creator" value="JW" class="creator-checkbox"> (JW)</label>
           </div>
         </div>
       </div>
 
       <div class="button-container">
-        <button onclick="generateReport()">Generate Report</button>
-        <button class="new-report-btn" onclick="newReport()">Generate New Report</button>
+        <button id="generateReportBtn">Generate Report</button>
+        <button class="new-report-btn" id="newReportBtn">Generate New Report</button>
       </div>
       <div class="button-container">
-        <button onclick="generateEmail()">Generate Email</button>
+        <button id="generateEmailBtn">Generate Email</button>
       </div>
       <div class="autosave-indicator" id="autosaveIndicator">Auto-save enabled - Your work is saved automatically</div>
 
@@ -992,14 +992,32 @@
 
     // Attach auto-save to all form inputs
     document.addEventListener('DOMContentLoaded', () => {
-      loadTheme();
-      loadFormData();
-      
-      document.querySelectorAll('input, textarea, select').forEach(element => {
-        element.addEventListener('input', autoSave);
-        element.addEventListener('change', autoSave);
+  loadTheme();
+  loadFormData();
+  
+  // Add button event listeners
+    document.getElementById('themeToggleBtn').addEventListener('click', toggleTheme);
+    document.getElementById('motivationBtn').addEventListener('click', getMotivation);
+    document.getElementById('closeMotivationBtn').addEventListener('click', function() {
+      document.getElementById('motivationBox').style.display = 'none';
+    });
+    document.getElementById('generateReportBtn').addEventListener('click', generateReport);
+    document.getElementById('newReportBtn').addEventListener('click', newReport);
+    document.getElementById('generateEmailBtn').addEventListener('click', generateEmail);
+  
+  // Add creator checkbox event listeners
+    document.querySelectorAll('.creator-checkbox').forEach(checkbox => {
+      checkbox.addEventListener('change', function() {
+        toggleExclusive(this);
       });
     });
+  
+  // Add auto-save to all form inputs
+    document.querySelectorAll('input, textarea, select').forEach(element => {
+      element.addEventListener('input', autoSave);
+      element.addEventListener('change', autoSave);
+    });
+  });
 
     function toggleExclusive(checkbox) {
       const checkboxes = document.querySelectorAll('input[name="creator"]');
@@ -1649,6 +1667,7 @@ const submissionStatus =
 </body>
 
 </html>
+
 
 
 
