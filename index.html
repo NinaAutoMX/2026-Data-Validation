@@ -958,22 +958,16 @@
       if (confirm('Are you sure you want to start a new report? This will clear all current data.')) {
         localStorage.removeItem('repairDashboardData');
         
-        document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], input[type="checkbox"], textarea, select').forEach(input => {
+        document.querySelectorAll('input[type="number"], input[type="text"], input[type="date"], textarea').forEach(input => {
           input.value = '';
-        });
-
-        document.querySelectorAll('select').forEach(select => {
-          if (select.id) {
-            formData[select.id] = select.value;
-          }
         });
         
         document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
           checkbox.checked = false;
         });
-
-        document.querySelectorAll('select').forEach(select => {
-          select.value = '';
+        
+        document.querySelectorAll('select').forEach(select => { 
+          select.selectedIndex = 0;
         });
         
         document.getElementById('reportText').innerHTML = '';
@@ -1631,6 +1625,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
