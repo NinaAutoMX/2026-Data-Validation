@@ -748,14 +748,16 @@
             </select>
           </fieldset>
         <fielset>
-           <legend>LDV 19/11/2025</legend>
-            <select id="ldvDisclaimer" class="disclaimer-select">
-             <option value=" ">Select status...</option>
-             <option value="not-submitting">Not Submitting</option>
-            <option value="submitting">Submitting</option>
-            <option value="partial">Partial submission</option>
-           </select>
-         </fielset>
+          <fieldset>
+            <legend>LDV 19/11/2025</legend>
+            <select id="ldvDisclaimer" class="ldvclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
+          </fieldset>
+         
          <fieldset> 
           <legend>Mahindra 22/07/2025</legend>
            <select id="mahindraDisclaimer" class="disclaimer-select">
@@ -765,6 +767,15 @@
              <option value="partial">Partial submission</option>
            </select>
          </fieldset>
+          <fieldset>
+            <legend>MG 26/11/2025</legend>
+            <select id="mgDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
+          </fieldset> 
           <fieldset>
             <legend>Mitsubishi 28/03/2025</legend>
             <select id="mitsubishiDisclaimer" class="disclaimer-select">
@@ -783,6 +794,15 @@
               <option value="partial">Partial submission</option>
             </select>
           </fieldset>
+          <fieldset>
+            <legend>Subaru 04/02/2026</legend>
+            <select id="subaruDisclaimer" class="disclaimer-select">
+              <option value=" ">Select status...</option>
+              <option value="not-submitting">Not submitting</option>
+              <Option value="submitting">Submitting</Option>
+              <option value="partial">Partial submission</option>
+            </select>
+          </fieldset>          
           <fieldset>
             <legend>Suzuki 09/06/2025</legend>
             <select id="suzukiDisclaimer" class="disclaimer-select">
@@ -1221,7 +1241,7 @@ const disclaimerData = {
   partial: []
 };
 
-['baic', 'ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'ldv', 'mahindra', 'mitsubishi', 'renault', 'suzuki', 'volvo', 'stellantis', 'volvov'].forEach(idPrefix => {
+['baic', 'ford', 'gwmhaval', 'honda', 'hyundai', 'isuzu', 'jac', 'ldv', 'mahindra', 'mg', 'mitsubishi', 'renault', 'subaru', 'suzuki', 'volvo', 'stellantis', 'volvov'].forEach(idPrefix => {
   const select = document.getElementById(idPrefix + 'Disclaimer');
   const value = select ? select.value : '';
   
@@ -1479,9 +1499,12 @@ if (showLastSubmitted && lastSubmittedDate) {
   if (selectedOEMs.includes('Hyundai')) inWarrantyOEMs.push('Hyundai');
   if (selectedOEMs.includes('Isuzu')) inWarrantyOEMs.push('Isuzu');
   if (selectedOEMs.includes('JAC')) inWarrantyOEMs.push('JAC');
+  if (selectedOEMs.includes('LDV')) inWarrantyOEMs.push('LDV');
   if (selectedOEMs.includes('Mahindra')) inWarrantyOEMs.push('Mahindra');
+  if (selectedOEMs.includes('MG')) inWarrantyOEMs.push('MG');
   if (selectedOEMs.includes('Mitsubishi')) inWarrantyOEMs.push('Mitsubishi');
   if (selectedOEMs.includes('Renault')) inWarrantyOEMs.push('Renault');
+  if (selectedOEMs.includes('Subaru')) inWarrantyOEMs.push('Subaru');
   if (selectedOEMs.includes('Suzuki')) inWarrantyOEMs.push('Suzuki');
   if (selectedOEMs.includes('Volvo')) inWarrantyOEMs.push('Volvo');
   
@@ -1634,6 +1657,7 @@ if (completed2026 > 0 && completed2026 < threshold) lowYears.push('2026');
 </body>
 
 </html>
+
 
 
 
