@@ -147,31 +147,43 @@ const SUB_TOGGLES = [
 
 // [id, brand name, form date, special (excluded from the generic "in warranty" email paragraph)]
 const DISCLAIMERS = [
-  ['baic','BAIC','11/06/2025'], ['byd','BYD','09/11/2025'], ['ford','Ford','08/11/2024'], ['gwm','GWM & Haval','19/08/2025'],
-  ['honda','Honda','17/01/2025'], ['hyundai','Hyundai','01/04/2025'], ['icaur','ICaur','05/06/2026'], ['isuzu','Isuzu','21/05/2025'],
-  ['jac','JAC','27/06/2025'], ['jetour','Jetour','19/11/2026'], ['ldv','LDV','19/11/2025'], ['mahindra','Mahindra','22/07/2025'],
+  ['baic','BAIC'], ['byd','BYD','27/11/2025'], ['ford','Ford','08/11/2024'], ['gwm','GWM & Haval','19/08/2025'],
+  ['honda','Honda','17/01/2025'], ['hyundai','Hyundai','01/04/2025'], ['icaur','ICaur'], ['isuzu','Isuzu','21/05/2025'],
+  ['jac','JAC','27/06/2025'], ['jetour','Jetour'], ['ldv','LDV','19/11/2025'], ['mahindra','Mahindra','22/07/2025'],
   ['mg','MG','26/11/2025'], ['mitsubishi','Mitsubishi','28/03/2025'], ['renault','Renault','02/12/2025'],
-  ['subaru','Subaru','04/02/2026'], ['suzuki','Suzuki','09/06/2025'], ['tata','Tata','22/02/2026'],
+  ['subaru','Subaru','04/02/2026'], ['suzuki','Suzuki','09/06/2025'], ['tata','Tata','02/03/2026'],
   ['volvo','Volvo','05/06/2025'],
   ['stellantis','Stellantis Categorization Forms','18/11/2024',true],
   ['volvov','Volvo Warranty & Maintenance Verification','02/04/2025',true],
 ];
 const OUT_OF_WARRANTY_BRANDS = ['Ford','Honda'];   // safety-critical-parts disclaimer paragraph
 
-// Invalid-model checkboxes + the email wording each group triggers
-const MODEL_NOTES = [
-  { models:['Chery Jaecoo','Chery Lepas','Chery Omoda'],
-    text:'Kindly note in particular that while Jaecoo, Lepas and Omoda form parts of your approval with Chery they are considered separate brands to Chery. Please capture the correct brand as the make and the correct model as the model. Please see attached the relevant Chery Bulletin.' },
-  { models:['Chery Tiggo'],
-    text:'Kindly note further Chery does not accept "Tiggo" as a valid model without the number variant as they have multiple Tiggo models. Please ensure that the number variant is included when capturing the Tiggo models. Please find attached the relevant Chery Bulletin.' },
-  { models:['GWM Haval'],
-    text:'Kindly note while Haval forms part of your approval with GWM, it is considered a separate brand to GWM. Please capture the Make as "Haval" and the model as the model (e.g. H6).' },
-  { models:['GWM Ora','GWM Steed','GWM Tank'],
-    text:'Kindly note further GWM has multiple Ora, Steed and Tank Models (Steed 5, Steed 6, Ora 03, Ora5, Tank 300 & Tank 500). Please ensure that the number variant is included when capturing the Ora models.' },
-  { models:['Mahindra Scorpio','Mahindra XUV'],
-    text:'Kindly note further that Mahindra has multiple XUV and Scorpio models (i.e. Scorpio-N, Scorpio SUV10, Scorpio SUV S11, XUV3XO, XUV200, XUV300, XUV500 & XUV700). Please ensure that the models are fully and accurately captured on your management system and submitted to AutoMX Connect.' },
+// Invalid-model groups. Each ticked model contributes its label/variants, so the email only
+// mentions the models that were actually ticked. `text` receives { names, variants }.
+const plural = (names, one, many) => names.length > 1 ? many : one;
+const MODEL_GROUPS = [
+  { items: [{ model:'Chery Jaecoo', label:'Jaecoo' }, { model:'Chery Lepas', label:'Lepas' }, { model:'Chery Omoda', label:'Omoda' }],
+    text: ({ names }) => `Kindly note in particular that while ${joinList(names, 'and')} ${plural(names, 'forms part', 'form parts')} of your approval with Chery ${plural(names, 'it is considered a separate brand', 'they are considered separate brands')} to Chery. Please capture the correct brand as the make and the correct model as the model. Please see attached the relevant Chery Bulletin.` },
+  { items: [{ model:'Chery Tiggo', label:'Tiggo' }],
+    text: () => 'Kindly note further Chery does not accept "Tiggo" as a valid model without the number variant as they have multiple Tiggo models. Please ensure that the number variant is included when capturing the Tiggo models. Please find attached the relevant Chery Bulletin.' },
+  { items: [{ model:'GWM Haval', label:'Haval' }],
+    text: () => 'Kindly note while Haval forms part of your approval with GWM, it is considered a separate brand to GWM. Please capture the Make as "Haval" and the model as the model (e.g. H6).' },
+  { items: [{ model:'GWM Steed', label:'Steed', variants:'Steed 5, Steed 6' }, { model:'GWM Ora', label:'Ora', variants:'Ora 03, Ora5' }, { model:'GWM Tank', label:'Tank', variants:'Tank 300 & Tank 500' }],
+    nameOrder: ['Ora', 'Steed', 'Tank'],
+    text: ({ names, variants }) => `Kindly note further GWM has multiple ${joinList(names, 'and')} models (${variants}). Please ensure that the number variant is included when capturing the GWM ${joinList(names, 'and')} models.` },
+  { items: [{ model:'Mahindra Scorpio', label:'Scorpio', variants:'Scorpio-N, Scorpio SUV10, Scorpio SUV S11' }, { model:'Mahindra XUV', label:'XUV', variants:'XUV3XO, XUV200, XUV300, XUV500 & XUV700' }],
+    text: ({ names, variants }) => `Kindly note further that Mahindra has multiple ${joinList(names, 'and')} models (i.e. ${variants}). Please ensure that the models are fully and accurately captured on your management system and submitted to AutoMX Connect.` },
 ];
-const MODELS = MODEL_NOTES.flatMap(n => n.models);
+const MODELS = MODEL_GROUPS.flatMap(g => g.items.map(i => i.model));
+
+function modelNotes(selected) {
+  return MODEL_GROUPS.flatMap(g => {
+    const picked = g.items.filter(i => selected.includes(i.model));
+    if (!picked.length) return [];
+    const names = (g.nameOrder || g.items.map(i => i.label)).filter(l => picked.some(i => i.label === l));
+    return [g.text({ names, variants: picked.map(i => i.variants).filter(Boolean).join(', ') })];
+  });
+}
 
 // Repair totals: each row is one or two [id, label, placeholder] fields
 const TOTALS_ROWS = [
@@ -435,18 +447,20 @@ function generateReport() {
   // Aggregate data
   const makeOption = radio('aggregateMakeOption');
   if (checked('chkAggregateMake')) parts.push(`They are submitting aggregate data${makeOption ? ` (${makeOption})` : ''} Make.`);
-  if (checked('chkFullBrandData')) parts.push('They are submitting full data for all brands they hold approval with.');
+  const exceptText = checked('chkNotReceiving') && text('receivingNotBrands') ? `Except (${text('receivingNotBrands')}).` : '';
+  if (checked('chkFullBrandData')) { parts.push('They are submitting full data for all brands they hold approval with.'); if (exceptText) parts.push(exceptText); }
   if (checked('chkFullData')) parts.push('They are submitting full data for all brands.');
+  if (exceptText && !checked('chkFullBrandData')) parts.push(exceptText);
   if (checked('chkAggregateText') && text('aggregateTextBrands')) parts.push(`There are some (${text('aggregateTextBrands')}) repairs where we are receiving aggregate data.`);
-  if (checked('chkNotReceiving') && text('receivingNotBrands')) parts.push(`There are some (${text('receivingNotBrands')}) repairs where we are not receiving full data.`);
   if (checked('chkInsurerName')) parts.push('They are not submitting Insurer name.');
   if (d.writeOffsUnder40k) parts.push(`There are ${d.writeOffsUnder40k}/${d.writeOffs} write-offs with repair values under R 40 000.00.`);
 
   // Missing fields
   const issues = [];
   const add = (v, total, label) => v && issues.push(flag(v, total, label));
-  add(d.missstart, repairTotal, 'missing start date');
-  add(d.compldatemiss, repairTotal, 'missing completion date');
+  // Critical fields: reported as plain counts, not out of a total
+  if (d.missstart) issues.push(`${d.missstart} repairs are missing start date`);
+  if (d.compldatemiss) issues.push(`${d.compldatemiss} repairs are missing completion date`);
   if (d.make) issues.push(`${d.make} repairs are missing make`);
   if (d.validModel) {
     const models = selectedModels();
@@ -454,7 +468,10 @@ function generateReport() {
   }
   add(d.hasRegno, repairTotal, 'missing registration no');
   add(d.missingVIN, repairTotal, 'missing VIN');
-  if (d.missReg) issues.push(`${flag(d.missReg, repairTotal, 'missing year of reg')} (${d.missRegActive}/${d.approvedActive} are active, ${d.missRegUnknownWarranty}/${d.missReg} have unknown warranty status)`);
+  if (d.missReg) {
+    const entry = `${d.missReg}/${repairTotal} missing year of reg (${d.missRegActive}/${d.approvedActive} are active, ${d.missRegUnknownWarranty}/${repairTotal} have unknown warranty status)`;
+    issues.push(over5(d.missRegUnknownWarranty, repairTotal) ? red(entry) : entry);   // red only on the unknown-warranty 5% threshold
+  }
   if (d.mileage) issues.push(`${flag(d.mileage, repairTotal, 'missing mileage')} (${d.mileageActive}/${d.approvedActive} are active)`);
   add(d.ownerName, repairTotal, 'missing owner name');
   add(d.ownerTel, repairTotal, 'missing owner telephone');
@@ -555,7 +572,7 @@ function generateEmail() {
       `If you have any issues, we suggest you contact ${system} directly.`);
   }
 
-  if (notFullBrands) p.push(`Kindly note we see you are not submitting full data for ${notFullBrands}. Please urgently update your permissions on your management system so full data can be submitted for ${notFullBrands}.`);
+  if (notFullBrands) p.push(`Kindly note we see you are not submitting full data for ${notFullBrands}. Please urgently update your permissions on your management system (by following the attached instructions) so full data can be submitted for ${notFullBrands}. If you need any assistance updating your permissions please contact ${system} for assistance.`);
 
   if (aggregateBrands) {
     p.push(`Kindly note we see that you are not submitting full data for all repairs on ${aggregateBrands} vehicles. Kindly note this may be due to a difference in spelling of the Make on the relevant Job Card and your permissions on ${system}. For example if your permissions are set to send full data for "${aggregateBrands}" but the make on a Job Card is captured as "EOM" your management system will read these as two different Makes and not send full data for said job card. Please ensure that full data is submitted for all repairs on ${aggregateBrands} vehicles from date of approval (date). Please find attached copies of your Active Repairs, 2025 Completed Repairs and 2026 Completed Reports where I have highlighted the relevant repairs in yellow.`);
@@ -569,7 +586,7 @@ function generateEmail() {
 
   // Guide to logging in — only when something is materially flagged
   const highPercentage =
-    [d.missstart, d.compldatemiss, d.validModel, d.hasRegno, d.missingVIN, d.missReg, d.mileage, d.ownerName, d.ownerTel, d.fullQuote]
+    [d.validModel, d.hasRegno, d.missingVIN, d.missRegUnknownWarranty, d.mileage, d.ownerName, d.ownerTel, d.fullQuote]
       .some(v => over5(v, repairTotal)) ||
     over5(d.partDescription, completedTotal) || over5(d.missingSupplier, completedTotal) || over5(d.ppp, allTotal);
   if (!hasAccess && (highPercentage || ppJobDetails)) {
@@ -586,7 +603,7 @@ function generateEmail() {
 
   // Invalid-model wording
   const models = selectedModels();
-  MODEL_NOTES.filter(n => n.models.some(m => models.includes(m))).forEach(n => p.push(n.text));
+  modelNotes(models).forEach(t => p.push(t));
 
   // Parts information
   if (oems.length && ppJobDetails) {
