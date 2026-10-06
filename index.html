@@ -129,18 +129,19 @@ const SYSTEMS = ['TMS','Dr Smash','Vantage','Veculim','Easy Costings','Plan Mana
 const APPROVALS = [
   ['baic','BAIC'], ['byd','BYD'], ['chery','Chery','Chery, Omoda & Jaecoo'], ['ford','Ford'], ['gwm','GWM/Haval'],
   ['honda','Honda'], ['hyundai','Hyundai'], ['icaur','ICaur'], ['isuzu','Isuzu'], ['jac','JAC'], ['jetour','Jetour'],
-  ['leapmotor','Leapmotor'], ['ldv','LDV'], ['mahindra','Mahindra'], ['mg','MG'], ['mitsubishi','Mitsubishi'], ['nissan','Nissan'],
+  ['ldv','LDV'], ['mahindra','Mahindra'], ['mg','MG'], ['mitsubishi','Mitsubishi'], ['nissan','Nissan'],
   ['renault','Renault'], ['stellantis','Stellantis'], ['subaru','Subaru'], ['suzuki','Suzuki'], ['tata','Tata'],
   ['volvo','Volvo'], ['bmw','BMW'],
 ];
 const STELLANTIS_BRANDS = {
-  Premium:  'Alfa Romeo, Abarth, Chevrolet, Chrysler, Citroen, Dodge, Fiat, Jeep, Opel & Peugeot',
-  Standard: 'Chevrolet, Chrysler, Citroen, Dodge, Fiat, Opel & Peugeot',
+  'Premium':             'Alfa Romeo, Abarth, Chevrolet, Chrysler, Citroen, Dodge, Fiat, Jeep, Opel & Peugeot',
+  'Premium + Leapmotor': 'Alfa Romeo, Abarth, Chevrolet, Chrysler, Citroen, Dodge, Fiat, Jeep, Leapmotor, Opel & Peugeot',
+  'Standard':            'Chevrolet, Chrysler, Citroen, Dodge, Fiat, Opel & Peugeot',
 };
 
 // Radio groups that only appear when their trigger checkbox is ticked
 const SUB_TOGGLES = [
-  { id:'stellantis', trigger:'ap-stellantis',    name:'stellantisType',      title:'Stellantis type:', options:['Premium', 'Standard'] },
+  { id:'stellantis', trigger:'ap-stellantis',    name:'stellantisType',      title:'Stellantis type:', options:['Standard', 'Premium', 'Premium + Leapmotor'] },
   { id:'mg',         trigger:'ap-mg',            name:'mgType',              title:'MG type:',         options:['Standard', 'EV'] },
   { id:'aggregate',  trigger:'chkAggregateMake', name:'aggregateMakeOption', title:'Aggregate data:',  options:['Including', 'Excluding'] },
 ];
@@ -550,7 +551,7 @@ function selectedOEMs() {
 function stellantisParagraph() {
   const type = radio('stellantisType');
   const qualityControl = type !== 'Standard';      // Premium (and unselected) include Quality Control docs
-  const qualityCheckSheet = type === 'Premium';
+  const qualityCheckSheet = type.startsWith('Premium');
   return 'Please also remember to complete and upload the Accident Damage Vehicle Categorization Sheet' +
     `${qualityControl ? ', Quality Control Documentation' : ''} and supporting documents for all repairs on Stellantis vehicles and the Disclaimer form for any repairs on in-warranty Stellantis vehicles where non-genuine, second hand, alternate salvaged and/or grey parts are fitted. ` +
     'Please find attached the relevant bulletin regarding how to complete and upload the required documents via AutoMX (https://www.automx.co.za/automx-main/) as well as the ' +
