@@ -129,12 +129,12 @@ const SYSTEMS = ['TMS','Dr Smash','Vantage','Veculim','Easy Costings','Plan Mana
 const APPROVALS = [
   ['baic','BAIC'], ['byd','BYD'], ['chery','Chery','Chery, Omoda & Jaecoo'], ['ford','Ford'], ['gwm','GWM/Haval'],
   ['honda','Honda'], ['hyundai','Hyundai'], ['icaur','ICaur'], ['isuzu','Isuzu'], ['jac','JAC'], ['jetour','Jetour'],
-  ['ldv','LDV'], ['mahindra','Mahindra'], ['mg','MG'], ['mitsubishi','Mitsubishi'], ['nissan','Nissan'],
+  ['leapmotor','Leapmotor'], ['ldv','LDV'], ['mahindra','Mahindra'], ['mg','MG'], ['mitsubishi','Mitsubishi'], ['nissan','Nissan'],
   ['renault','Renault'], ['stellantis','Stellantis'], ['subaru','Subaru'], ['suzuki','Suzuki'], ['tata','Tata'],
   ['volvo','Volvo'], ['bmw','BMW'],
 ];
 const STELLANTIS_BRANDS = {
-  Premium:  'Alfa Romeo, Abarth, Chevrolet, Chrysler, Citroen, Dodge, Fiat, Jeep, LeapMotor, Opel & Peugeot',
+  Premium:  'Alfa Romeo, Abarth, Chevrolet, Chrysler, Citroen, Dodge, Fiat, Jeep, Opel & Peugeot',
   Standard: 'Chevrolet, Chrysler, Citroen, Dodge, Fiat, Opel & Peugeot',
 };
 
@@ -164,6 +164,8 @@ const plural = (names, one, many) => names.length > 1 ? many : one;
 const MODEL_GROUPS = [
   { items: [{ model:'Chery Jaecoo', label:'Jaecoo' }, { model:'Chery Lepas', label:'Lepas' }, { model:'Chery Omoda', label:'Omoda' }],
     text: ({ names }) => `Kindly note in particular that while ${joinList(names, 'and')} ${plural(names, 'forms part', 'form parts')} of your approval with Chery ${plural(names, 'it is considered a separate brand', 'they are considered separate brands')} to Chery. Please capture the correct brand as the make and the correct model as the model. Please see attached the relevant Chery Bulletin.` },
+  { items: [{ model:'LDV T60', label:'T60' }],
+    text: () => 'Kindly note further LDV does not accept "T60" as a valid model as they have multiple T60 models (i.e. T60 Elite, T60 Max Luxe, T60 Max Pro & T60 Pro). Please ensure that the ending variant is included when capturing the LDV T60 models.' },
   { items: [{ model:'Chery Tiggo', label:'Tiggo' }],
     text: () => 'Kindly note further Chery does not accept "Tiggo" as a valid model without the number variant as they have multiple Tiggo models. Please ensure that the number variant is included when capturing the Tiggo models. Please find attached the relevant Chery Bulletin.' },
   { items: [{ model:'GWM Haval', label:'Haval' }],
@@ -506,13 +508,25 @@ function generateReport() {
   };
   const sub = group('submitting'), not = group('not-submitting'), par = group('partial');
   const sentences = [];
-  if (sub.regular.length) sentences.push(`They are submitting Disclaimer forms for ${joinList(sub.regular)}`);
-  if (not.regular.length) sentences.push(`They are not submitting any Disclaimer forms for ${joinList(not.regular)}`);
-  if (par.regular.length) sentences.push(`They are submitting Disclaimer forms for ${joinList(par.regular)}, however there appears to be repairs that do not have Disclaimer forms`);
-  if (sub.special.length) sentences.push(`They are submitting ${joinList(sub.special)}`);
-  if (not.special.length) sentences.push(`They are not submitting ${joinList(not.special)}`);
-  if (par.special.length) sentences.push(`They are submitting ${joinList(par.special)}, however there appears to be repairs that do not have the required forms`);
+  if (sub.regular.length) sentences.push(`They have submitted Disclaimer forms for ${joinList(sub.regular)}`);
+  if (not.regular.length) sentences.push(`They have not submitted any Disclaimer forms for ${joinList(not.regular)}`);
+  if (par.regular.length) sentences.push(`They have submitted Disclaimer forms for ${joinList(par.regular)}, however there appears to be repairs that do not have Disclaimer forms`);
+  if (sub.special.length) sentences.push(`They have submitted ${joinList(sub.special)}`);
+  if (not.special.length) sentences.push(`They have not submitted ${joinList(not.special)}`);
+  if (par.special.length) sentences.push(`They have submitted ${joinList(par.special)}, however there appears to be repairs that do not have the required forms`);
   if (sentences.length) parts.push(sentences.join('. ') + '.');
+
+  // Actions taken (mirrors what the email asks for)
+  parts.push('I sent them their 2025 & 2026 validation reports requesting they correct their data.');
+  if (selectedOEMs().length && text('pp2026JobsInput')) parts.push('I also noted that there are a number of repairs where we are not receiving the required parts information and requested they ensure that the required parts information is captured on their management system and submitted to AutoMX Connect.');
+  if (checked('chkNotReceiving') && text('receivingNotBrands')) parts.push(`I noted we are not receiving full data for (${text('receivingNotBrands')}) and asked them to update their permissions on their Management system so full data can be submitted for (${text('receivingNotBrands')}).`);
+  if (checked('chkAggregateText') && text('aggregateTextBrands')) parts.push(`I noted there are a number of repairs on (${text('aggregateTextBrands')}) where we are not receiving full data and this may be due to a difference in spelling of the "MAKE" on their permissions vs the Job Card and requested they ensure full data is submitted for all repairs on (${text('aggregateTextBrands')}).`);
+  const flaggedForms = disclaimerBrands(NOT_SUBMITTED);
+  if (flaggedForms.length) parts.push(`I reminded them to submit the relevant Disclaimer forms for (${flaggedForms.join(', ')}). I referred them to & attached the relevant (${flaggedForms.join(', ')}) bulletins & corresponding Disclaimer forms.`);
+  if (d.openLong) parts.push(`I noted there are a number of repairs which have been active for an unusually long time (${d.openLong}), and reminded them to close off/cancel Job cards as soon as possible after the repairs have been completed/cancelled.`);
+  const { low } = lowYears(d);
+  if (low.length) parts.push(`I queried the low number of completed repairs for (${low.join(', ')}).`);
+  if (d.writeOffs === 0) parts.push('I queried lack of write-offs.');
 
   // Notes + creator
   const notes = text('additionalNotes'), creator = radio('creator');
@@ -543,11 +557,14 @@ function stellantisParagraph() {
     `${qualityCheckSheet ? 'Quality Check Sheet and ' : ''}Disclaimer Form.`;
 }
 
+// Same method as the mini report: past years vs. their average, 2026 vs. a pro-rata expectation
 function lowYears(d) {
   const years = { 2022: d.completed2022, 2023: d.completed2023, 2024: d.completed2024, 2025: d.completed2025, 2026: d.completed2026 };
-  const nonZero = Object.values(years).filter(n => n > 0);
-  const threshold = nonZero.length ? nonZero.reduce((a, b) => a + b, 0) / nonZero.length * 0.5 : 0;
-  const low = Object.keys(years).filter(y => years[y] > 0 && years[y] < threshold);
+  const past = [2022, 2023, 2024, 2025];
+  const pastAvg = past.reduce((sum, y) => sum + years[y], 0) / past.length;
+  const expected2026 = (pastAvg / 12) * (new Date().getMonth() + 1);
+  const low = past.filter(y => years[y] > 0 && years[y] < pastAvg * 0.9);
+  if (years[2026] > 0 && years[2026] < expected2026 * 0.9) low.push(2026);
   const [peakYear, peakCount] = Object.entries(years).reduce((m, c) => c[1] > m[1] ? c : m, [0, 0]);
   return { low, peakYear, peakCount };
 }
